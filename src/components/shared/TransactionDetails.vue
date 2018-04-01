@@ -125,15 +125,15 @@
     },
     methods: {
       completeTransaction: function () {
-        var transaction = this.ardoiseUser ? TransactionService.addForUser(
+        const transaction = this.ardoiseUser ? TransactionService.addForUser(
           this.products,
           this.ardoiseUser
         ) : TransactionService.addForAnonymous(
           this.products
         )
-        transaction.then(function(){
+        transaction.then(function () {
 
-        });
+        })
       },
       calculateRebate: function (product) {
         if (this.isArdoiseUser) {
