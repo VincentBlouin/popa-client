@@ -9,7 +9,7 @@
           <!--<small v-if="transactionItems.length === 0">{{$t('aTransaction:noItemsOfPurchase')}}</small>-->
         </div>
       </v-subheader>
-      <transaction-details :products="products" :isArdoiseUser="$store.state.ardoiseUser !== undefined"
+      <transaction-details :products="products" :ardoiseUser="$store.state.ardoiseUser"
                            @onTotal="setTransactionItemsTotal"/>
       <!--<v-list two-line subheader>-->
       <!--<div v-for="item in transactionItems" :key="item.id">-->
@@ -123,7 +123,7 @@
     <v-dialog v-model="showCompleteTransactionModal">
       <v-card>
         <v-card-text>
-          <transaction-details :products="products" @onTotal="setTransactionItemsTotal" :isArdoiseUser="$store.state.ardoiseUser !== undefined"/>
+          <transaction-details :products="products" @onTotal="setTransactionItemsTotal" :ardoiseUser="$store.state.ardoiseUser"/>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>

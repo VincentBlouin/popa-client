@@ -13,9 +13,9 @@
     >
       <template slot="items" slot-scope="props">
         <td>{{ props.item.createdAt | date}}</td>
-        <td>{{ props.item.deposit}}</td>
-        <td>{{ props.item.withdrawal}}</td>
-        <td>{{ props.item.balance}}</td>
+        <td>{{ props.item.deposit | currency}}</td>
+        <td>{{ props.item.withdrawal | currency}}</td>
+        <td>{{ props.item.balance | currency}}</td>
       </template>
     </v-data-table>
   </div>

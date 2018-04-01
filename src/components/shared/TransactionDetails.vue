@@ -52,6 +52,7 @@
 <script>
   import Vue from 'vue'
   import i18n from '@/i18n'
+  import TransactionService from '../../service/TransactionService'
 
   export default {
     name: 'transaction-details',
@@ -97,7 +98,7 @@
     },
     props: [
       'products',
-      'isArdoiseUser'
+      'ardoiseUser'
     ],
     computed: {
       transactionItems: function () {
@@ -107,8 +108,11 @@
       },
       transactionItemsTotal: function () {
         return this.transactionItems.reduce(function (sum, item) {
-          return sum + item.quantity * item.unitPrice
-        }, 0)
+          return sum + item.quantity * item.unitPrice - this.calculateRebate(item)
+        }.bind(this), 0)
+      },
+      isArdoiseUser: function () {
+        return this.ardoiseUser !== undefined
       }
     },
     watch: {
@@ -121,7 +125,15 @@
     },
     methods: {
       completeTransaction: function () {
-        this.transactionItems = true
+        var transaction = this.ardoiseUser ? TransactionService.addForUser(
+          this.products,
+          this.ardoiseUser
+        ) : TransactionService.addForAnonymous(
+          this.products
+        )
+        transaction.then(function(){
+
+        });
       },
       calculateRebate: function (product) {
         if (this.isArdoiseUser) {
