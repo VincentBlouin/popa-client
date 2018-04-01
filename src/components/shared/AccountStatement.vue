@@ -12,7 +12,7 @@
       class="elevation-1"
     >
       <template slot="items" slot-scope="props">
-        <td>{{ props.item.createdAt | formatDate}}</td>
+        <td>{{ props.item.createdAt | date}}</td>
         <td>{{ props.item.deposit}}</td>
         <td>{{ props.item.withdrawal}}</td>
         <td>{{ props.item.balance}}</td>
@@ -27,7 +27,6 @@
   import Vue from 'vue'
   import TransactionService from '@/service/TransactionService'
   import i18n from '@/i18n'
-  import VueDateFilter from '@/vueDateFilter'
 
   export default {
     name: 'account-statement',

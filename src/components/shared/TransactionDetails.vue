@@ -18,15 +18,15 @@
         </v-avatar>
         {{ props.item.name}}
       </td>
-      <td>{{ props.item.format}}</td>
-      <td>{{ props.item.unitPrice}} $</td>
+      <td>{{ props.item.format | currency}}</td>
+      <td>{{ props.item.unitPrice | currency}}</td>
       <td class="text-xs-center">
         {{props.item.quantity}}
       </td>
       <td>
-        {{calculateRebate(props.item)}}
+        {{calculateRebate(props.item) | currency}}
       </td>
-      <td>{{ props.item.unitPrice * props.item.quantity - calculateRebate(props.item)}} $</td>
+      <td>{{ (props.item.unitPrice * props.item.quantity - calculateRebate(props.item)) | currency}}</td>
     </template>
     <template slot="footer">
       <td>
@@ -42,7 +42,7 @@
       <td>
         <strong v-if="transactionItems.length > 0">
           {{$t('aTransaction:total')}}
-          {{transactionItemsTotal}} $
+          {{transactionItemsTotal | currency}}
         </strong>
       </td>
     </template>

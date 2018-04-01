@@ -9,7 +9,8 @@
           <!--<small v-if="transactionItems.length === 0">{{$t('aTransaction:noItemsOfPurchase')}}</small>-->
         </div>
       </v-subheader>
-      <transaction-details :products="products" :isArdoiseUser="$store.state.ardoiseUser !== undefined" @onTotal="setTransactionItemsTotal"/>
+      <transaction-details :products="products" :isArdoiseUser="$store.state.ardoiseUser !== undefined"
+                           @onTotal="setTransactionItemsTotal"/>
       <!--<v-list two-line subheader>-->
       <!--<div v-for="item in transactionItems" :key="item.id">-->
       <!--<v-list-tile avatar>-->
@@ -68,10 +69,10 @@
             <v-card-title>
               <div>
               <span class="grey--text">
-                {{$t('unitPrice')}}: {{product.unitPrice}}$
+                {{$t('unitPrice')}}: {{product.unitPrice | currency}}
               </span><br>
                 <span class="grey--text">
-                {{$t('totalPrice')}}: {{product.quantity * product.unitPrice}}$
+                {{$t('totalPrice')}}: {{(product.quantity * product.unitPrice) | currency}}
               </span><br>
                 <span class="grey--text">
                 {{$t('Format')}}: {{product.format}}<br>
@@ -109,7 +110,7 @@
         multi-line
         v-model="showConfirmSnackbar"
       >
-        {{$t('aTransaction:total')}}: {{transactionItemsTotal}}$
+        {{$t('aTransaction:total')}}: {{transactionItemsTotal | currency}}
         <v-btn dark color="primary" style="padding: 8px;" :disabled="products.length === 0"
                @click="showCompleteTransactionModal = true; showConfirmSnackbar= false">
           {{$t('aTransaction:completeTransaction')}}
@@ -122,7 +123,7 @@
     <v-dialog v-model="showCompleteTransactionModal">
       <v-card>
         <v-card-text>
-          <transaction-details :products="products" @onTotal="setTransactionItemsTotal"/>
+          <transaction-details :products="products" @onTotal="setTransactionItemsTotal" :isArdoiseUser="$store.state.ardoiseUser !== undefined"/>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
