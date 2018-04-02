@@ -40,7 +40,7 @@
               </v-card-title>
               <v-card-text>
                 <v-btn
-                  to="/anonymous-transaction" color="primary">
+                  to="/transaction" color="primary">
                   {{$t('landing:buyOnce')}}
                 </v-btn>
                 <v-btn
@@ -102,12 +102,15 @@
         ).then(function (user) {
           this.$store.dispatch('setArdoiseUser', user.data)
           this.$router.push({
-            name: 'ArdoiseTransaction'
+            name: 'Transaction'
           })
         }.bind(this)).catch(function (error) {
           this.error = error.response.data.error
         }.bind(this))
       }
+    },
+    mounted: function () {
+      this.$store.dispatch('setArdoiseUser', null)
     }
 
   }

@@ -1,7 +1,7 @@
 <template>
   <div>
     <panel
-      :title="$t('aTransaction:title') + ' ' + $store.state.ardoiseUser.firstName + ' ' + $store.state.ardoiseUser.lastName">
+      :title="title">
       <v-subheader>
         <div>
           {{$t('aTransaction:itemsOfPurchase')}}
@@ -64,7 +64,7 @@
           </v-card>
         </v-flex>
       </v-layout>
-      <account-statement :ardoiseUser="$store.state.ardoiseUser"></account-statement>
+      <account-statement v-if="$store.state.ardoiseUser" :ardoiseUser="$store.state.ardoiseUser"></account-statement>
       <v-snackbar
         color="secondary"
         :timeout="9999999"
@@ -126,11 +126,12 @@
   import Rules from '@/rules'
 
   export default {
-    name: 'ardoise-transaction',
+    name: 'transaction',
     components: {AccountStatement, TransactionDetails},
     data () {
       i18n.i18next.addResources('en', 'aTransaction', {
         title: 'Purchase on account of',
+        anonymousTitle: 'Anonymous purchase',
         products: 'Products',
         itemsOfPurchase: 'Items of purchase',
         completeTransaction: 'Complete transaction',
@@ -143,6 +144,7 @@
       })
       i18n.i18next.addResources('fr', 'aTransaction', {
         title: 'Achat sur le compte de',
+        anonymousTitle: 'Achat anonyme',
         products: 'Produits',
         itemsOfPurchase: 'Items de l\'achat',
         completeTransaction: 'Compléter la transaction',
@@ -227,6 +229,14 @@
           clearTimeout(t)
           t = setTimeout(showArdoiseLogoutDialog.bind(this), 60 * 1000)
         }
+      }
+    },
+    computed: {
+      title: function () {
+        if (this.$store.state.ardoiseUser) {
+          return this.$t('aTransaction:title') + ' ' + this.$store.state.ardoiseUser.firstName + ' ' + this.$store.state.ardoiseUser.lastName
+        }
+        return this.$t('aTransaction:anonymousTitle')
       }
     }
   }

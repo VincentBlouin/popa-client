@@ -6,7 +6,7 @@ import Subscribers from '@/components/Subscribers'
 import ArdoiseLanding from '@/components/ArdoiseLanding'
 import Subscribe from '@/components/Subscribe'
 import AnonymousTransaction from '@/components/AnonymousTransaction'
-import ArdoiseTransaction from '@/components/ArdoiseTransaction'
+import Transaction from '@/components/Transaction'
 
 Vue.use(Router)
 
@@ -39,9 +39,9 @@ export default new Router({
       component: AnonymousTransaction
     },
     {
-      path: '/ardoise-transaction',
-      name: 'ArdoiseTransaction',
-      component: ArdoiseTransaction
+      path: '/transaction',
+      name: 'Transaction',
+      component: Transaction
     }
     // {
     //   path: '/',

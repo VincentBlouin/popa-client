@@ -149,7 +149,7 @@
         }.bind(this), 0)
       },
       isArdoiseUser: function () {
-        return this.ardoiseUser !== undefined
+        return this.ardoiseUser !== null
       }
     },
     watch: {
