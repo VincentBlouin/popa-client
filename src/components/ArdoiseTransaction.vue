@@ -5,48 +5,10 @@
       <v-subheader>
         <div>
           {{$t('aTransaction:itemsOfPurchase')}}
-          <!--<br>-->
-          <!--<small v-if="transactionItems.length === 0">{{$t('aTransaction:noItemsOfPurchase')}}</small>-->
         </div>
       </v-subheader>
       <transaction-details :products="products" :ardoiseUser="$store.state.ardoiseUser"
                            @onTotal="setTransactionItemsTotal"/>
-      <!--<v-list two-line subheader>-->
-      <!--<div v-for="item in transactionItems" :key="item.id">-->
-      <!--<v-list-tile avatar>-->
-      <!--<v-list-tile-action class="mr-3">-->
-      <!--<v-checkbox v-model="item.name"></v-checkbox>-->
-      <!--<v-text-field-->
-      <!--type="number"-->
-      <!--max="999"-->
-      <!--min="1"-->
-      <!--name="quantity"-->
-      <!--placeholder="0"-->
-      <!--:label="$t('aTransaction:quantity')"-->
-      <!--small-->
-      <!--required-->
-      <!--auto-grow-->
-      <!--hide-details-->
-      <!--:rules="[rules.required]"-->
-      <!--v-model="item.quantity"-->
-      <!--&gt;</v-text-field>-->
-      <!--</v-list-tile-action>-->
-      <!--<v-list-tile-avatar>-->
-      <!--<img :src="item.image">-->
-      <!--</v-list-tile-avatar>-->
-      <!--<v-list-tile-content>-->
-      <!--<v-list-tile-title>{{ item.name}}</v-list-tile-title>-->
-      <!--<v-list-tile-sub-title>{{ item.description}}</v-list-tile-sub-title>-->
-      <!--</v-list-tile-content>-->
-      <!--<v-list-tile-action>-->
-      <!--<v-btn icon ripple @click="removeItemFromPurchase(item)">-->
-      <!--<v-icon color="grey lighten-1">delete</v-icon>-->
-      <!--</v-btn>-->
-      <!--</v-list-tile-action>-->
-      <!--</v-list-tile>-->
-      <!--<v-divider inset></v-divider>-->
-      <!--</div>-->
-      <!--</v-list>-->
       <v-subheader>
         {{$t('aTransaction:products')}}
       </v-subheader>
@@ -123,7 +85,8 @@
     <v-dialog v-model="showCompleteTransactionModal">
       <v-card>
         <v-card-text>
-          <transaction-details :products="products" @onTotal="setTransactionItemsTotal" :ardoiseUser="$store.state.ardoiseUser"/>
+          <transaction-details :products="products" @onTotal="setTransactionItemsTotal"
+                               :ardoiseUser="$store.state.ardoiseUser"/>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -134,9 +97,27 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog
+      v-model="showSessionExpiredSuccess"
+      persistent
+      max-width="600px"
+    >
+      <v-card>
+        <v-card-title class="headline text-xs-center">
+          {{$t('aTransaction:inactivity')}}
+        </v-card-title>
+        <v-card-text>
+          {{$t('aTransaction:beDisconnected')}} {{logoutTimeout}} {{$t('aTransaction:seconds')}}
+        </v-card-text>
+        <v-card-actions>
+          <v-btn color="primary" class="pull-right" @click="extendSession()">
+            {{$t('aTransaction:extendSession')}}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
-
 <script>
   import AccountStatement from '@/components/shared/AccountStatement'
   import TransactionDetails from '@/components/shared/TransactionDetails'
@@ -155,7 +136,10 @@
         completeTransaction: 'Complete transaction',
         total: 'Total',
         Format: 'Format',
-        seeSummary: 'see summary'
+        beDisconnected: 'You will be disconnected in',
+        extendSession: 'Extend session',
+        seconds: 'seconds',
+        inactivity: 'Inactivity'
       })
       i18n.i18next.addResources('fr', 'aTransaction', {
         title: 'Achat sur le compte de',
@@ -164,17 +148,25 @@
         completeTransaction: 'Compléter la transaction',
         total: 'Total',
         Format: 'Format',
-        seeSummary: 'voir résumé'
+        beDisconnected: 'Vous serez déconnecté dans',
+        extendSession: 'Prolonger la session',
+        seconds: 'seconds',
+        inactivity: 'Inactivité'
       })
+      this.disconnectAfterInactivity()
       return {
         showConfirmSnackbar: false,
         rules: Rules,
         products: [],
         showCompleteTransactionModal: false,
-        transactionItemsTotal: 0
+        transactionItemsTotal: 0,
+        showSessionExpiredSuccess: false,
+        logoutTimeout: null,
+        ardoiseLogoutInterval: null
       }
     },
     mounted: function () {
+      clearInterval(this.ardoiseLogoutInterval)
       ProductService.list().then(function (products) {
         products.data.forEach(function (product) {
           product.quantity = 0
@@ -193,14 +185,48 @@
         }
         item.quantity--
       },
-      removeItemFromPurchase: function (item) {
-        item.quantity = 0
-      },
-      seeSummary: function () {
-        window.scrollTo(0, 0)
-      },
       setTransactionItemsTotal: function (value) {
         this.transactionItemsTotal = value
+      },
+      ardoiseLogout: function () {
+        clearInterval(this.ardoiseLogoutInterval)
+        this.$router.push({
+          name: 'ArdoiseLanding'
+        })
+        this.$store.dispatch('setArdoiseUser', null)
+      },
+      extendSession: function () {
+        clearInterval(this.ardoiseLogoutInterval)
+        this.showSessionExpiredSuccess = false
+      },
+      disconnectAfterInactivity: function () {
+        let t
+        window.onload = resetTimer.bind(this)
+        document.onmousemove = resetTimer.bind(this)
+        document.onkeypress = resetTimer.bind(this)
+        document.onmousemove = resetTimer.bind(this)
+        document.onmousedown = resetTimer.bind(this) // touchscreen presses
+        document.ontouchstart = resetTimer.bind(this)
+        document.onclick = resetTimer.bind(this) // touchpad clicks
+        document.onscroll = resetTimer.bind(this) // scrolling with arrow keys
+
+        function showArdoiseLogoutDialog () {
+          clearTimeout(t)
+          this.logoutTimeout = 10
+          this.showSessionExpiredSuccess = true
+          this.ardoiseLogoutInterval = setInterval(function () {
+            this.logoutTimeout--
+            if (this.logoutTimeout <= 0) {
+              this.ardoiseLogout()
+            }
+          }.bind(this), 1000)
+        }
+
+        function resetTimer () {
+          console.log('timer reset')
+          clearTimeout(t)
+          t = setTimeout(showArdoiseLogoutDialog.bind(this), 60 * 1000)
+        }
       }
     }
   }
