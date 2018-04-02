@@ -17,9 +17,9 @@
           >
             <img :src="props.item.image" class="left">
           </v-avatar>
-          {{ props.item.name}}
+          {{ props.item.name | i18n}}
         </td>
-        <td>{{ props.item.format | currency}}</td>
+        <td>{{ props.item.format | i18n}}</td>
         <td>{{ props.item.unitPrice | currency}}</td>
         <td class="text-xs-center">
           {{props.item.quantity}}

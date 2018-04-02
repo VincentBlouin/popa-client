@@ -5,7 +5,6 @@ import Login from '@/components/Login'
 import Subscribers from '@/components/Subscribers'
 import ArdoiseLanding from '@/components/ArdoiseLanding'
 import Subscribe from '@/components/Subscribe'
-import AnonymousTransaction from '@/components/AnonymousTransaction'
 import Transaction from '@/components/Transaction'
 
 Vue.use(Router)
@@ -32,11 +31,6 @@ export default new Router({
       path: '/subscribe',
       name: 'Subscribe',
       component: Subscribe
-    },
-    {
-      path: '/anonymous-transaction',
-      name: 'AnonymousTransaction',
-      component: AnonymousTransaction
     },
     {
       path: '/transaction',

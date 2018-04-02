@@ -48,6 +48,18 @@ export default {
         }
       }
     })
+    Vue.filter('i18n', function (value) {
+      if (typeof value !== 'object' || !value) {
+        return value
+      }
+      if (Object.keys(value).length <= 0) {
+        return value
+      }
+      if (value[this.state.locale]) {
+        return value[this.state.locale]
+      }
+      return value[Object.keys(value)[0]]
+    }.bind(Store))
   },
   i18next: i18next,
   getLocale: function () {

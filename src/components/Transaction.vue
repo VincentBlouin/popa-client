@@ -23,7 +23,7 @@
               <v-container fill-height fluid>
                 <v-layout fill-height>
                   <v-flex xs12 align-end flexbox>
-                    <span class="headline">{{product.name}}</span>
+                    <span class="headline">{{product.name | i18n}}</span>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -37,10 +37,10 @@
                 {{$t('totalPrice')}}: {{(product.quantity * product.unitPrice) | currency}}
               </span><br>
                 <span class="grey--text">
-                {{$t('Format')}}: {{product.format}}<br>
+                {{$t('Format')}}: {{product.format | i18n}}<br>
               </span>
                 <p>
-                  {{product.description}}
+                  {{product.description | i18n}}
                 </p>
               </div>
             </v-card-title>
