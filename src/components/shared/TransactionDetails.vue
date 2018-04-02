@@ -55,16 +55,23 @@
     >
       <v-card>
         <v-card-title class="headline text-xs-center">
-          <h4 class="text-xs-center">{{$t('details:yourBalanceIs')}} {{balance | currency}}</h4>
+          <h4 class="text-xs-center">
+            <span v-if="isArdoiseUser">
+              {{$t('details:yourBalanceIs')}} {{balance | currency}}
+            </span>
+            <span v-if="!isArdoiseUser">
+              {{$t('details:thankYou')}} {{transactionItemsTotal | currency}}
+            </span>
+          </h4>
         </v-card-title>
         <v-card-text>
           <v-layout row wrap flex align-center justify-center>
             <v-flex md6>
-              {{$t('details:beDisconnected')}} {{disconnectTimeout}} {{$t('details:seconds')}}
+              {{$t('details:beRedirected')}} {{disconnectTimeout}} {{$t('details:seconds')}}
             </v-flex>
             <v-flex md6>
-              <v-btn color="primary" class="pull-right" @click="ardoiseDisconnect()">
-                {{$t('details:disconnectNow')}}
+              <v-btn color="primary" class="pull-right" @click="redirectToLanding()">
+                {{$t('details:redirectNow')}}
               </v-btn>
             </v-flex>
           </v-layout>
@@ -85,16 +92,18 @@
       i18n.i18next.addResources('en', 'details', {
         noItemsOfPurchase: 'No items yet',
         yourBalanceIs: 'Your balance is now',
-        beDisconnected: 'You will be disconnected in',
-        disconnectNow: 'Disconnect now',
-        seconds: 'seconds'
+        beRedirected: 'You will be redirected in',
+        redirectNow: 'Redirect now',
+        seconds: 'seconds',
+        thankYou: 'Thank you, do not forget to pay the amount'
       })
       i18n.i18next.addResources('fr', 'details', {
         noItemsOfPurchase: 'Pas encore d\'items',
         yourBalanceIs: 'Votre solde est maintenant de',
-        beDisconnected: 'Vous serez déconnecté dans',
-        disconnectNow: 'Déconnecter maintenant',
-        seconds: 'secondes'
+        beRedirected: 'Vous serez redirigé dans',
+        redirectNow: 'Rediriger maintenant',
+        seconds: 'secondes',
+        thankYou: 'Merci, n\'oubliez pas de payer le montant'
       })
       return {
         pagination: {
@@ -173,12 +182,13 @@
         )
         transaction.then(function (transaction) {
           this.balance = parseFloat(transaction.data.balance)
-          this.disconnectTimeout = 10
+          this.disconnectTimeout = 20
           this.showTransactionMsgSuccess = true
+          this.$store.dispatch('setArdoiseUser', null)
           this.timeoutInterval = setInterval(function () {
             this.disconnectTimeout--
             if (this.disconnectTimeout <= 0) {
-              this.ardoiseDisconnect()
+              this.redirectToLanding()
             }
           }.bind(this), 1000)
         }.bind(this))
@@ -189,9 +199,8 @@
         }
         return 0
       },
-      ardoiseDisconnect: function () {
+      redirectToLanding: function () {
         clearInterval(this.timeoutInterval)
-        this.$store.dispatch('setArdoiseUser', null)
         this.$router.push({
           name: 'ArdoiseLanding'
         })
