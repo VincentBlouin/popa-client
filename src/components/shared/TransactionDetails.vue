@@ -95,7 +95,7 @@
         beRedirected: 'You will be redirected in',
         redirectNow: 'Redirect now',
         seconds: 'seconds',
-        thankYou: 'Thank you, do not forget to pay the amount'
+        thankYou: 'Thank you, do not forget to pay the amount of'
       })
       i18n.i18next.addResources('fr', 'details', {
         noItemsOfPurchase: 'Pas encore d\'items',
@@ -103,7 +103,7 @@
         beRedirected: 'Vous serez redirigé dans',
         redirectNow: 'Rediriger maintenant',
         seconds: 'secondes',
-        thankYou: 'Merci, n\'oubliez pas de payer le montant'
+        thankYou: 'Merci, n\'oubliez pas de payer le montant de'
       })
       return {
         pagination: {
@@ -182,9 +182,9 @@
         )
         transaction.then(function (transaction) {
           this.balance = parseFloat(transaction.data.balance)
+          debugger;
           this.disconnectTimeout = 20
           this.showTransactionMsgSuccess = true
-          this.$store.dispatch('setArdoiseUser', null)
           this.timeoutInterval = setInterval(function () {
             this.disconnectTimeout--
             if (this.disconnectTimeout <= 0) {
@@ -201,6 +201,7 @@
       },
       redirectToLanding: function () {
         clearInterval(this.timeoutInterval)
+        this.$store.dispatch('setArdoiseUser', null)
         this.$router.push({
           name: 'ArdoiseLanding'
         })
