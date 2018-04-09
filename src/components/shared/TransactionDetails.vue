@@ -182,7 +182,6 @@
         )
         transaction.then(function (transaction) {
           this.balance = parseFloat(transaction.data.balance)
-          debugger;
           this.disconnectTimeout = 20
           this.showTransactionMsgSuccess = true
           this.timeoutInterval = setInterval(function () {

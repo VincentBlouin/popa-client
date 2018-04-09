@@ -94,6 +94,12 @@
     methods: {
       ardoiseLogin: function () {
         this.error = null
+        if (this.ardoiseIdentifier.trim() === 'sortir') {
+          this.$store.dispatch('setToken', null)
+          this.$store.dispatch('setUser', null)
+          window.location.href = '/login'
+          return
+        }
         if (this.ardoiseIdentifier.trim() === '') {
           return
         }
