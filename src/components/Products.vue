@@ -132,7 +132,7 @@
           product.name = i18n.getText(product.name)
           product.format = i18n.getText(product.format)
           return product
-        }.bind(this))
+        })
       }.bind(this))
     }
   }

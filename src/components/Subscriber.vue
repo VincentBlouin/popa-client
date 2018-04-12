@@ -42,9 +42,8 @@
       <v-card-text>
         <v-text-field
           type="number"
-          required
+          min="0"
           :label="$t('subscriber:addFund')"
-          :rules="[rules.required]"
           v-model="basketDeposit"
         ></v-text-field>
       </v-card-text>
@@ -56,7 +55,7 @@
     </v-card>
     <v-card>
       <v-card-text>
-        <account-statement v-if="!isCreate" :ardoiseUser="subscriber"></account-statement>
+        <account-statement v-if="!isCreate && !refreshAccountStatement" :ardoiseUser="subscriber"></account-statement>
       </v-card-text>
     </v-card>
   </panel>
@@ -66,7 +65,9 @@
   import i18n from '@/i18n'
   import Rules from '@/rules'
   import UserService from '../service/UserService'
+  import TransactionService from '../service/TransactionService'
   import AccountStatement from '@/components/shared/AccountStatement'
+  import Vue from 'vue'
 
   export default {
     name: 'subscriber',
@@ -97,7 +98,8 @@
       return {
         subscriber: {},
         rules: Rules,
-        basketDeposit: 0
+        basketDeposit: null,
+        refreshAccountStatement: false
       }
     },
     methods: {
@@ -121,6 +123,22 @@
         UserService.updateClient(
           this.subscriber
         )
+      },
+      addFund: function () {
+        if (!this.basketDeposit || this.basketDeposit <= 0) {
+          return
+        }
+        const amount = this.basketDeposit
+        this.basketDeposit = null
+        TransactionService.addFundToSubscriber(
+          amount,
+          this.subscriber
+        ).then(function () {
+          this.refreshAccountStatement = true
+          Vue.nextTick(function () {
+            this.refreshAccountStatement = false
+          }.bind(this))
+        }.bind(this))
       }
     },
     computed: {

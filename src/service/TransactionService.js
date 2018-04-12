@@ -18,5 +18,14 @@ export default {
       '/transaction',
       items
     )
+  },
+  addFundToSubscriber: function (amount, subscriber) {
+    return Service.api().post(
+      '/transaction/fund',
+      {
+        amount: amount,
+        subscriberId: subscriber.id
+      }
+    )
   }
 }
