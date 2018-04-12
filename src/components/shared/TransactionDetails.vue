@@ -14,6 +14,7 @@
             size="36px"
             slot="activator"
             class="mr-3"
+            v-if="props.item.image"
           >
             <img :src="props.item.image" class="left">
           </v-avatar>
@@ -32,7 +33,9 @@
       <template slot="footer">
         <td>
           <v-btn color="primary" class="ml-3 mt-4 mb-4 left" @click="completeTransaction()"
-                 :disabled="transactionItems.length === 0">
+                 :disabled="transactionItems.length === 0"
+                 v-if="!hideComplete"
+          >
             {{$t('aTransaction:completeTransaction')}}
           </v-btn>
         </td>
@@ -144,7 +147,8 @@
     },
     props: [
       'products',
-      'ardoiseUser'
+      'ardoiseUser',
+      'hideComplete'
     ],
     computed: {
       transactionItems: function () {

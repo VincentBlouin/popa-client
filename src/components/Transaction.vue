@@ -214,7 +214,7 @@
 
         function showArdoiseLogoutDialog () {
           clearTimeout(t)
-          this.logoutTimeout = 10
+          this.logoutTimeout = 20
           this.showSessionExpiredSuccess = true
           this.ardoiseLogoutInterval = setInterval(function () {
             this.logoutTimeout--

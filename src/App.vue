@@ -15,6 +15,7 @@
           value="true"
           v-for="(item, i) in items"
           :key="i"
+          @click="goTo(item.path)"
         >
           <v-list-tile-action>
             <v-icon v-html="item.icon"></v-icon>
@@ -31,7 +32,8 @@
       color="primary"
       :clipped-left="clipped"
     >
-      <v-toolbar-side-icon @click.stop="drawer = !drawer" v-if="$store.state.isUserLoggedIn && $store.state.user.status != 'ardoise'"></v-toolbar-side-icon>
+      <v-toolbar-side-icon @click.stop="drawer = !drawer"
+                           v-if="$store.state.isUserLoggedIn && $store.state.user.status != 'ardoise'"></v-toolbar-side-icon>
       <!--<v-btn icon @click.stop="miniVariant = !miniVariant">-->
       <!--<v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>-->
       <!--</v-btn>-->
@@ -94,6 +96,7 @@
   import Vue from 'vue'
   import i18n from '@/i18n'
 
+  const loggedOutOnlyPages = ['Login', 'Register', 'ForgotPassword', 'ChangePassword']
   export default {
     data () {
       i18n.i18next.addResources('en', 'header', {
@@ -115,7 +118,7 @@
         items: [{
           icon: 'people',
           title: Vue.t('header:subscriber'),
-          path: '/credit-sessions'
+          path: '/subscribers'
         }],
         miniVariant: false,
         right: true,
@@ -157,10 +160,29 @@
         this.$router.push({
           name: this.$store.state.baseComponent
         })
+      },
+      redirectIfOnWrongPage: function () {
+        const isOnLoggedOutOnlyPage = loggedOutOnlyPages.indexOf(this.$route.name) !== -1
+        const isLoggedInAndOnWrongPage = this.$store.state.isUserLoggedIn && isOnLoggedOutOnlyPage
+        const isLoggedOutAndOnWrongPage = !this.$store.state.isUserLoggedIn && !isOnLoggedOutOnlyPage
+        if (isLoggedInAndOnWrongPage || isLoggedOutAndOnWrongPage) {
+          this.$router.push({
+            name: this.$store.state.baseComponent
+          })
+        }
+      },
+      goTo: function (path) {
+        this.$router.push({
+          path: path
+        })
       }
     },
     mounted: function () {
       this.redirectToBasePage()
+      this.redirectIfOnWrongPage()
+    },
+    beforeUpdate: function () {
+      this.redirectIfOnWrongPage()
     }
   }
 </script>

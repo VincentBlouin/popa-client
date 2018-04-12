@@ -12,7 +12,12 @@ export default {
   setup: function () {
     Vue.filter('date', function (value) {
       if (value) {
-        return moment(String(value)).format('MMMM D YYYY, h:mm:ss')
+        return moment(String(value)).format('D MMMM YYYY, HH:mm:ss')
+      }
+    })
+    Vue.filter('dayDate', function (value) {
+      if (value) {
+        return moment(String(value)).format('D MMMM YYYY')
       }
     })
   }

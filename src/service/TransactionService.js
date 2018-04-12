@@ -2,11 +2,14 @@ import Service from '@/service/service'
 
 export default {
   list: function (user) {
-    return Service.api().get('/transaction/' + user.id)
+    return Service.api().get(user.id + '/transaction')
+  },
+  getDetails: function (user, transaction) {
+    return Service.api().get(user.id + '/transaction/' + transaction.id)
   },
   addForUser: function (items, user) {
     return Service.api().post(
-      '/transaction/' + user.id,
+      user.id + '/transaction',
       items
     )
   },

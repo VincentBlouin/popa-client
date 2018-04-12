@@ -29,7 +29,10 @@ export default {
             quantity: 'QTÉ',
             totalPrice: 'Prix total',
             rebate: 'Rabais',
-            close: 'Fermer'
+            close: 'Fermer',
+            notSubscribed: 'Pas inscris',
+            subscribed: 'Inscris',
+            details: 'détails'
           }
         },
         en: {
@@ -43,7 +46,10 @@ export default {
             quantity: 'QTY',
             totalPrice: 'Total price',
             rebate: 'Rebate',
-            close: 'Close'
+            close: 'Close',
+            notSubscribed: 'Not subscribed',
+            subscribed: 'Subscribed',
+            details: 'details'
           }
         }
       }

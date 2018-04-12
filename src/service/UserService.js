@@ -1,3 +1,20 @@
+import Service from '@/service/service'
+
+export default {
+  clients: function () {
+    return Service.api().get('/clients')
+  },
+  getDetails: function (user) {
+    return Service.api().get('/clients/' + user.id)
+  },
+  updateClient: function (client) {
+    return Service.api().put('/clients', client)
+  },
+  createClient: function (client) {
+    return Service.api().post('/clients', client)
+  }
+}
+
 // import Service from '@/service/service'
 // export default {
 //   // register: function (user) {
