@@ -4,6 +4,8 @@ import Router from 'vue-router'
 import Login from '@/components/Login'
 import Subscribers from '@/components/Subscribers'
 import Subscriber from '@/components/Subscriber'
+import Products from '@/components/Products'
+import Product from '@/components/Product'
 import ArdoiseLanding from '@/components/ArdoiseLanding'
 import Subscribe from '@/components/Subscribe'
 import Transaction from '@/components/Transaction'
@@ -32,6 +34,21 @@ export default new Router({
       path: '/subscriber/:subscriberId',
       name: 'ChangeSubscriber',
       component: Subscriber
+    },
+    {
+      path: '/products',
+      name: 'Products',
+      component: Products
+    },
+    {
+      path: '/product',
+      name: 'Product',
+      component: Product
+    },
+    {
+      path: '/product/:productId',
+      name: 'ChangeProduct',
+      component: Product
     },
     {
       path: '/ardoises',

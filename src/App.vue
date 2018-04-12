@@ -103,13 +103,15 @@
         title: 'Self service basket Potagers Partagés',
         logout: 'Logout',
         requestError: 'There\'s a connection problem with our server. Try again later.',
-        subscriber: 'Subscribers'
+        subscriber: 'Subscribers',
+        products: 'Products'
       })
       i18n.i18next.addResources('fr', 'header', {
         title: 'Panier libre service Potagers Partagés',
         logout: 'Déconnexion',
         requestError: 'Il y a un problème de connexion avec notre serveur. Essayez de nouveau plus tard.',
-        subscriber: 'Abonnés'
+        subscriber: 'Abonnés',
+        products: 'Produits'
       })
       return {
         clipped: false,
@@ -119,6 +121,10 @@
           icon: 'people',
           title: Vue.t('header:subscriber'),
           path: '/subscribers'
+        },{
+          icon: 'local_florist',
+          title: Vue.t('header:products'),
+          path: '/products'
         }],
         miniVariant: false,
         right: true,
