@@ -32,7 +32,8 @@ export default {
             close: 'Fermer',
             notSubscribed: 'Pas inscris',
             subscribed: 'Inscris',
-            details: 'détails'
+            details: 'détails',
+            invalidEmail: 'courriel invalide'
           }
         },
         en: {
@@ -49,7 +50,8 @@ export default {
             close: 'Close',
             notSubscribed: 'Not subscribed',
             subscribed: 'Subscribed',
-            details: 'details'
+            details: 'details',
+            invalidEmail: 'invalid email'
           }
         }
       }

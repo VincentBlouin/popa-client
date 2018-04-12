@@ -6,6 +6,8 @@
           <v-text-field
             :label="$t('subscriber:email')"
             v-model="subscriber.email"
+            :rules="[rules.email]"
+            type="email"
           ></v-text-field>
           <v-text-field
             :label="$t('subscriber:firstName')"
@@ -65,6 +67,7 @@
   import Rules from '@/rules'
   import UserService from '../service/UserService'
   import AccountStatement from '@/components/shared/AccountStatement'
+
   export default {
     name: 'subscriber',
     components: {AccountStatement},
@@ -99,16 +102,22 @@
     },
     methods: {
       create: function () {
+        if (!this.$refs.subscriberForm.validate()) {
+          return
+        }
         UserService.createClient(
           this.subscriber
         ).then(function (client) {
+          this.subscriber = client.data
           this.$router.push({
-            name: 'ChangeSubscriber',
-            path: '/subscriber/' + client.data.id
+            path: '/subscriber/' + this.subscriber.id
           })
         }.bind(this))
       },
       edit: function () {
+        if (!this.$refs.subscriberForm.validate()) {
+          return
+        }
         UserService.updateClient(
           this.subscriber
         )
@@ -124,7 +133,7 @@
     },
     mounted: function () {
       this.subscriber.id = this.$route.params.subscriberId
-      if (!this.isCreate) {
+      if (!this.subscriber.id) {
         return
       }
       UserService.getDetails(this.subscriber).then(function (subscriber) {
