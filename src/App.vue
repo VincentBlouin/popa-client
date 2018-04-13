@@ -21,7 +21,9 @@
             <v-icon v-html="item.icon"></v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title v-text="item.title"></v-list-tile-title>
+            <v-list-tile-title>
+              {{$t(item.title)}}
+            </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -46,7 +48,9 @@
       <!--<a href="#" class="no-style-link">-->
       <!--<img :src=  "require('@/assets/image.png')" class="mr-2" height="38px;" style="vertical-align: middle">-->
       <!--</a>-->
-      <v-toolbar-title v-text="title" dark></v-toolbar-title>
+      <v-toolbar-title dark>
+        {{$t('header:title')}}
+      </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-btn icon @click.stop="rightDrawer = !rightDrawer">
         <v-icon>settings</v-icon>
@@ -69,8 +73,11 @@
             <v-icon>public</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>
-              {{switchLanguageText}}
+            <v-list-tile-title v-if="$store.state.locale === 'fr'">
+              English
+            </v-list-tile-title>
+            <v-list-tile-title v-if="$store.state.locale === 'en'">
+              Français
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
@@ -119,40 +126,23 @@
         fixed: false,
         items: [{
           icon: 'people',
-          title: Vue.t('header:subscriber'),
+          title: 'header:subscriber',
           path: '/subscribers'
-        },{
+        }, {
           icon: 'local_florist',
-          title: Vue.t('header:products'),
+          title: 'header:products',
           path: '/products'
         }],
         miniVariant: false,
         right: true,
-        rightDrawer: false,
-        title: Vue.t('header:title'),
-        switchLanguageText: this.getLanguageSwitcherText()
+        rightDrawer: false
       }
     },
     name: 'App',
     methods: {
-      getLanguageSwitcherText: function () {
-        switch (Vue.params.i18nextLanguage) {
-          case 'fr':
-            return 'English'
-          case 'en':
-            return 'Français'
-        }
-      },
       switchLanguage: function () {
         const newLocale = Vue.params.i18nextLanguage === 'en' ? 'fr' : 'en'
         this.$store.dispatch('setLocale', newLocale)
-        // if (this.$store.state.isUserLoggedIn) {
-        //   UserService.changeLocale(
-        //     this.$store.state.user,
-        //     newLocale
-        //   )
-        // }
-        this.switchLanguageText = this.getLanguageSwitcherText()
       },
       logout: function () {
         this.$store.dispatch('setToken', null)

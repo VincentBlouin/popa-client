@@ -2,13 +2,7 @@ import i18n from '@/i18n'
 import moment from 'moment'
 import Vue from 'vue'
 
-const locale = i18n.getLocale()
-moment.locale(
-  locale === 'fr'
-    ? 'fr-ca' : 'en'
-)
-
-export default {
+const dateFilter = {
   setup: function () {
     Vue.filter('date', function (value) {
       if (value) {
@@ -20,5 +14,14 @@ export default {
         return moment(String(value)).format('D MMMM YYYY')
       }
     })
+    dateFilter.refreshLocale()
+  },
+  refreshLocale: function () {
+    moment.locale(
+      i18n.getLocale() === 'fr'
+        ? 'fr-ca' : 'en'
+    )
   }
 }
+
+export default dateFilter

@@ -105,11 +105,15 @@
         }
         return AuthenticationService.ardoiseLogin(
           this.ardoiseIdentifier
-        ).then(function (user) {
-          this.$store.dispatch('setArdoiseUser', user.data)
+        ).then(function (_user) {
+          const user = _user.data
+          this.$store.dispatch('setArdoiseUser', user)
           this.$router.push({
             name: 'Transaction'
           })
+          if (user.locale) {
+            this.$store.dispatch('setLocale', user.locale)
+          }
         }.bind(this)).catch(function (error) {
           this.error = error.response.data.error
         }.bind(this))

@@ -16,6 +16,7 @@ import {
   VToolbar,
   transitions,
   VTextField,
+  VCheckbox,
   VForm,
   VDataTable,
   VCard,
@@ -24,7 +25,8 @@ import {
   VSnackbar,
   VDivider,
   VAvatar,
-  VDialog
+  VDialog,
+  VChip
 } from 'vuetify'
 import '../node_modules/vuetify/src/stylus/app.styl'
 import VueParams from 'vue-params'
@@ -52,6 +54,7 @@ Vue.use(Vuetify, {
     VToolbar,
     transitions,
     VTextField,
+    VCheckbox,
     VForm,
     VDataTable,
     VCard,
@@ -60,7 +63,8 @@ Vue.use(Vuetify, {
     VSnackbar,
     VDivider,
     VAvatar,
-    VDialog
+    VDialog,
+    VChip
   },
   theme: {
     primary: '#E65100',

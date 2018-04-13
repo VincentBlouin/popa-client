@@ -23,7 +23,9 @@
               <v-container fill-height fluid>
                 <v-layout fill-height>
                   <v-flex xs12 align-end flexbox>
-                    <span class="headline">{{product.name | i18n}}</span>
+                    <v-chip class="headline" color="secondary" text-color="white">
+                      {{product.name | i18n}}
+                    </v-chip>
                   </v-flex>
                 </v-layout>
               </v-container>
@@ -47,16 +49,16 @@
             <v-card-actions>
               <v-layout>
                 <v-flex xs4>
-                  <v-btn icon color="primary" class="ml-3 left" @click="incrementQuantityForItem(product)">
-                    <v-icon>add</v-icon>
+                  <v-btn icon color="primary" class="ml-3 left" @click="decrementQuantityForItem(product)">
+                    <v-icon>remove</v-icon>
                   </v-btn>
                 </v-flex>
                 <v-flex xs4 class="text-xs-center grey--text" style="font-size:2em">
                   <span>{{product.quantity}}x</span>
                 </v-flex>
                 <v-flex xs4>
-                  <v-btn icon color="primary" class="mr-3 right" @click="decrementQuantityForItem(product)">
-                    <v-icon>remove</v-icon>
+                  <v-btn icon color="primary" class="mr-3 right" @click="incrementQuantityForItem(product)">
+                    <v-icon>add</v-icon>
                   </v-btn>
                 </v-flex>
               </v-layout>
@@ -169,7 +171,7 @@
     },
     mounted: function () {
       clearInterval(this.ardoiseLogoutInterval)
-      ProductService.list().then(function (products) {
+      ProductService.listAvailable().then(function (products) {
         products.data.forEach(function (product) {
           product.quantity = 0
         })

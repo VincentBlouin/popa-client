@@ -26,6 +26,14 @@
         :pagination.sync="pagination"
       >
         <template slot="items" slot-scope="props">
+          <td>
+            <span v-if="props.item.isAvailable">
+              {{$t('products:available')}}
+            </span>
+            <span v-if="!props.item.isAvailable">
+              {{$t('products:notAvailable')}}
+            </span>
+          </td>
           <td>{{ props.item.name}}</td>
           <td>{{ props.item.format}}</td>
           <td>
@@ -65,6 +73,9 @@
         unitPrice: 'Unit price',
         nbInStock: 'Nb in stock',
         date: 'Creation day',
+        availability: 'Availability',
+        available: 'Available',
+        notAvailable: 'Not available',
         noResults1: 'Your search for',
         noResults2: 'found no results'
       })
@@ -75,6 +86,9 @@
         unitPrice: 'Prix unitaire',
         nbInStock: 'Nb en stock',
         date: 'Jour de création',
+        availability: 'Disponibilité',
+        available: 'Disponible',
+        notAvailable: 'Non disponible',
         noResults1: 'Votre recherche pour',
         noResults2: 'n\'a retourné aucun résultat'
       })
@@ -85,6 +99,10 @@
           rowsPerPage: -1
         },
         headers: [
+          {
+            text: ' ',
+            value: 'isAvailable'
+          },
           {
             text: Vue.t('products:name'),
             value: 'name'
@@ -127,7 +145,7 @@
       }
     },
     mounted: function () {
-      ProductService.list().then(function (products) {
+      ProductService.listAll().then(function (products) {
         this.products = products.data.map(function (product) {
           product.name = i18n.getText(product.name)
           product.format = i18n.getText(product.format)

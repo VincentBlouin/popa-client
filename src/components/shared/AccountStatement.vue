@@ -36,15 +36,12 @@
             <v-icon>close</v-icon>
           </v-btn>
           <v-toolbar-title>
-            {{$t('statements:billNumber')}} {{billNumber}}
+            {{$t('statements:billNumber')}} {{billNumber}}<br>
           </v-toolbar-title>
           <v-spacer></v-spacer>
           <v-toolbar-title>
             {{ardoiseUser.firstName + ' ' + ardoiseUser.lastName}}
           </v-toolbar-title>
-          <!--<v-btn color="dark" flat @click.native="detailsDialog = false; billDetails=null">-->
-          <!--{{$t('close')}}-->
-          <!--</v-btn>-->
         </v-toolbar>
         <v-card-text>
           <transaction-details :products="billDetails" :ardoiseUser="ardoiseUser" areTransactionsCommited="true"/>
@@ -119,7 +116,8 @@
         transactions: [],
         billDetails: null,
         detailsDialog: false,
-        billNumber: null
+        billNumber: null,
+        billDate: null
       }
     },
     props: [
@@ -129,6 +127,7 @@
       showDetails: function (transaction) {
         this.detailsDialog = true
         this.billNumber = transaction.id
+        this.billDate = transaction.createdAt
         TransactionService.getDetails(
           this.$store.state.user,
           transaction

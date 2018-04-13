@@ -38,6 +38,11 @@
           >
             {{$t('aTransaction:completeTransaction')}}
           </v-btn>
+          <small v-if="areTransactionsCommited && products">
+            <strong>
+              {{products[0].createdAt | date}}
+            </strong>
+          </small>
         </td>
         <td></td>
         <td></td>
