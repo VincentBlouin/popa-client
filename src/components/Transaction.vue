@@ -227,7 +227,7 @@
         function resetTimer () {
           console.log('timer reset')
           clearTimeout(t)
-          t = setTimeout(showArdoiseLogoutDialog.bind(this), 60 * 1000)
+          t = setTimeout(showArdoiseLogoutDialog.bind(this), 120 * 1000)
         }
       }
     },

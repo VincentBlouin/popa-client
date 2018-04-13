@@ -38,7 +38,7 @@
         </v-btn>
       </v-card-actions>
     </v-card>
-    <v-card>
+    <v-card v-if="!isCreate">
       <v-card-text>
         <v-text-field
           type="number"
@@ -53,9 +53,9 @@
         </v-btn>
       </v-card-actions>
     </v-card>
-    <v-card>
+    <v-card v-if="!isCreate">
       <v-card-text>
-        <account-statement v-if="!isCreate && !refreshAccountStatement" :ardoiseUser="subscriber"></account-statement>
+        <account-statement :ardoiseUser="subscriber" v-if="!refreshAccountStatement"></account-statement>
       </v-card-text>
     </v-card>
   </panel>

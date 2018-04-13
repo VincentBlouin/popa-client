@@ -34,7 +34,7 @@
         <td>
           <v-btn color="primary" class="ml-3 mt-4 mb-4 left" @click="completeTransaction()"
                  :disabled="transactionItems.length === 0"
-                 v-if="!hideComplete"
+                 v-if="!areTransactionsCommited"
           >
             {{$t('aTransaction:completeTransaction')}}
           </v-btn>
@@ -148,7 +148,7 @@
     props: [
       'products',
       'ardoiseUser',
-      'hideComplete'
+      'areTransactionsCommited'
     ],
     computed: {
       transactionItems: function () {
@@ -197,6 +197,9 @@
         }.bind(this))
       },
       calculateRebate: function (product) {
+        if (this.areTransactionsCommited) {
+          return product.totalPrice - product.totalPriceAfterRebate
+        }
         if (this.isArdoiseUser) {
           return (product.quantity * product.unitPrice) * 0.1
         }

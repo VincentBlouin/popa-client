@@ -47,7 +47,7 @@
           <!--</v-btn>-->
         </v-toolbar>
         <v-card-text>
-          <transaction-details :products="billDetails" :ardoiseUser="$store.state.ardoiseUser" hideComplete="true"/>
+          <transaction-details :products="billDetails" :ardoiseUser="ardoiseUser" areTransactionsCommited="true"/>
         </v-card-text>
       </v-card>
     </v-dialog>
