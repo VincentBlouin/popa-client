@@ -26,7 +26,8 @@ import {
   VDivider,
   VAvatar,
   VDialog,
-  VChip
+  VChip,
+  VSelect
 } from 'vuetify'
 import '../node_modules/vuetify/src/stylus/app.styl'
 import VueParams from 'vue-params'
@@ -64,7 +65,8 @@ Vue.use(Vuetify, {
     VDivider,
     VAvatar,
     VDialog,
-    VChip
+    VChip,
+    VSelect
   },
   theme: {
     primary: '#E65100',

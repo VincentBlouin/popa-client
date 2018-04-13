@@ -27,6 +27,12 @@
             :rules="[rules.required]"
             v-model="subscriber.ardoiseIdentifier"
           ></v-text-field>
+          <v-select
+            :label="$t('subscriber:language')"
+            :items="languages"
+            item-value="text"
+            v-model="subscriber.locale"
+          />
         </v-form>
       </v-card-text>
       <v-card-actions>
@@ -82,7 +88,8 @@
         ardoisePassword: 'Ardoise password',
         add: 'Add',
         edit: 'Modify',
-        addFund: 'Add fund to basket'
+        addFund: 'Add fund to basket',
+        language: 'Language'
       })
       i18n.i18next.addResources('fr', 'subscriber', {
         addTitle: 'Ajouter un abonné',
@@ -93,13 +100,21 @@
         ardoisePassword: 'Mot de passe d\'ardoise',
         add: 'Ajouter',
         edit: 'Modifier',
-        addFund: 'Ajouter fonds dans le panier'
+        addFund: 'Ajouter fonds dans le panier',
+        language: 'Langue'
       })
       return {
         subscriber: {},
         rules: Rules,
         basketDeposit: null,
-        refreshAccountStatement: false
+        refreshAccountStatement: false,
+        languages: [{
+          text: 'fr',
+          value: 'fr'
+        }, {
+          text: 'en',
+          value: 'en'
+        }]
       }
     },
     methods: {
