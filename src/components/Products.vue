@@ -100,7 +100,7 @@
         },
         headers: [
           {
-            text: ' ',
+            text: Vue.t('products:availability'),
             value: 'isAvailable'
           },
           {

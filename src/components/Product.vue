@@ -6,6 +6,7 @@
           <v-checkbox
             :label="$t('product:isAvailable')"
             v-model="product.isAvailable"
+            v-if="!isAdminOnly"
           />
           <v-text-field
             :label="$t('product:nameFr')"
@@ -20,20 +21,24 @@
           <v-text-field
             :label="$t('product:formatFr')"
             v-model="product.format.fr"
+            v-if="!isAdminOnly"
           />
           <v-text-field
             :label="$t('product:formatEn')"
             v-model="product.format.en"
+            v-if="!isAdminOnly"
           />
           <v-text-field
             :label="$t('product:descriptionFr')"
             v-model="product.description.fr"
             multi-line
+            v-if="!isAdminOnly"
           />
           <v-text-field
             :label="$t('product:descriptionEn')"
             v-model="product.description.en"
             multi-line
+            v-if="!isAdminOnly"
           />
           <v-text-field
             :label="$t('product:unitPrice')"
@@ -41,12 +46,14 @@
             :rules="[rules.required]"
             min="0"
             type="number"
+            v-if="!isAdminOnly"
           />
           <v-text-field
             :label="$t('product:nbInStock')"
             v-model="product.nbInStock"
             min="0"
             type="number"
+            v-if="!isAdminOnly"
           />
         </v-form>
       </v-card-text>
@@ -149,6 +156,9 @@
     computed: {
       isCreate: function () {
         return this.product.id === undefined
+      },
+      isAdminOnly: function () {
+        return !this.isCreate && this.product.type === 'adminOnly'
       },
       title: function () {
         return this.isCreate ? this.$t('product:addTitle') : this.$t('product:editTitle')
