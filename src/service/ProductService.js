@@ -15,5 +15,11 @@ export default {
   },
   create: function (product) {
     return Service.api().post('/product', product)
+  },
+  uploadImage: function (formData) {
+    return Service.api().post('/product/image', formData)
+  },
+  getImageUrl: function (product) {
+    return Service.baseUrl() + '/product/image/' + product.image.fileName
   }
 }

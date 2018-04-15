@@ -1,14 +1,17 @@
 import axios from 'axios'
 import Store from '@/store'
 
-export default {
+const Service = {
+  baseUrl: function () {
+    return location.protocol + '//' + location.hostname + ':3000'
+  },
   api: function () {
     const loginPages = [
       '/',
       '/login'
     ]
     const axiosInstance = axios.create({
-      baseURL: location.protocol + '//' + location.hostname + ':3000',
+      baseURL: Service.baseUrl(),
       headers: {
         Authorization: 'Bearer ' + Store.state.token
       }
@@ -26,3 +29,4 @@ export default {
     return axiosInstance
   }
 }
+export default Service

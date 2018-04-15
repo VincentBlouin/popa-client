@@ -18,7 +18,7 @@
             <v-card-media
               class="white--text"
               height="200px"
-              :src="product.image"
+              :src="ProductService.getImageUrl(product)"
             >
               <v-container fill-height fluid>
                 <v-layout fill-height>
@@ -166,7 +166,8 @@
         transactionItemsTotal: 0,
         showSessionExpiredSuccess: false,
         logoutTimeout: null,
-        ardoiseLogoutInterval: null
+        ardoiseLogoutInterval: null,
+        ProductService: ProductService
       }
     },
     mounted: function () {
