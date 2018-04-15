@@ -12,9 +12,9 @@
       <v-subheader>
         {{$t('aTransaction:products')}}
       </v-subheader>
-      <v-layout row wrap>
-        <v-flex xs12 sm3 md3 v-for="product in products">
-          <v-card>
+      <v-layout row wrap style="">
+        <v-flex xs12 sm4 md4 lg2 v-for="product in products">
+          <v-card class="mr-3 mb-3">
             <v-card-media
               class="white--text"
               height="200px"
@@ -46,7 +46,7 @@
                 </p>
               </div>
             </v-card-title>
-            <v-card-actions>
+            <v-card-actions class="mb-2">
               <v-layout>
                 <v-flex xs4>
                   <v-btn icon color="primary" class="ml-3 left" @click="decrementQuantityForItem(product)">

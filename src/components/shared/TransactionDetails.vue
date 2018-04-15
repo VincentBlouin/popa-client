@@ -16,7 +16,7 @@
             class="mr-3"
             v-if="props.item.image"
           >
-            <img :src="props.item.image" class="left">
+            <img :src="ProductService.getImageUrl(props.item)" class="left">
           </v-avatar>
           {{ props.item.name | i18n}}
         </td>
@@ -93,6 +93,7 @@
   import Vue from 'vue'
   import i18n from '@/i18n'
   import TransactionService from '../../service/TransactionService'
+  import ProductService from '../../service/ProductService'
 
   export default {
     name: 'transaction-details',
@@ -147,7 +148,8 @@
         showTransactionMsgSuccess: false,
         balance: null,
         disconnectTimeout: null,
-        timeoutInterval: null
+        timeoutInterval: null,
+        ProductService: ProductService
       }
     },
     props: [
