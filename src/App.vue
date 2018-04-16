@@ -111,14 +111,16 @@
         logout: 'Logout',
         requestError: 'There\'s a connection problem with our server. Try again later.',
         subscriber: 'Subscribers',
-        products: 'Products'
+        products: 'Products',
+        transactions: 'Transactions'
       })
       i18n.i18next.addResources('fr', 'header', {
         title: 'Panier libre service Potagers Partagés',
         logout: 'Déconnexion',
         requestError: 'Il y a un problème de connexion avec notre serveur. Essayez de nouveau plus tard.',
         subscriber: 'Abonnés',
-        products: 'Produits'
+        products: 'Produits',
+        transactions: 'Transactions'
       })
       return {
         clipped: false,
@@ -132,6 +134,10 @@
           icon: 'local_florist',
           title: 'header:products',
           path: '/products'
+        }, {
+          icon: 'assignment',
+          title: 'header:transactions',
+          path: '/transactions-items'
         }],
         miniVariant: false,
         right: true,

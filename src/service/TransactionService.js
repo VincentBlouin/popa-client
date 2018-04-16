@@ -4,6 +4,9 @@ export default {
   list: function (user) {
     return Service.api().get(user.id + '/transaction')
   },
+  listAllDetails: function () {
+    return Service.api().get('/transactions/details')
+  },
   getDetails: function (user, transaction) {
     return Service.api().get(user.id + '/transaction/' + transaction.id)
   },

@@ -9,6 +9,7 @@ import Product from '@/components/Product'
 import ArdoiseLanding from '@/components/ArdoiseLanding'
 import Subscribe from '@/components/Subscribe'
 import Transaction from '@/components/Transaction'
+import TransactionItems from '@/components/TransactionItems'
 
 Vue.use(Router)
 
@@ -64,6 +65,11 @@ export default new Router({
       path: '/transaction',
       name: 'Transaction',
       component: Transaction
+    },
+    {
+      path: '/transactions-items',
+      name: 'TransactionItems',
+      component: TransactionItems
     }
     // {
     //   path: '/',

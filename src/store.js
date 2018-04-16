@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import VuexPersistedState from 'vuex-persistedstate'
-import DateFilter from '@/dateFilter'
+import DateUtil from '@/dateUtil'
 
 Vue.use(Vuex)
 export default new Vuex.Store({
@@ -34,7 +34,7 @@ export default new Vuex.Store({
         return
       }
       state.locale = Vue.params.i18nextLanguage = locale
-      DateFilter.refreshLocale()
+      DateUtil.refreshLocale()
     },
     setArdoiseUser: function (state, ardoiseUser) {
       state.ardoiseUser = ardoiseUser

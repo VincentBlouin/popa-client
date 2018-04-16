@@ -33,14 +33,14 @@ import '../node_modules/vuetify/src/stylus/app.styl'
 import VueParams from 'vue-params'
 import Store from '@/store'
 import Panel from '@/components/Panel'
-import DateFilter from '@/dateFilter'
+import DateUtil from '@/dateUtil'
 import CurrencyFilter from '@/currencyFilter'
 
 Vue.component('panel', Panel)
 
 Vue.use(VueParams)
 
-DateFilter.setup()
+DateUtil.setup()
 CurrencyFilter.setup()
 i18n.setup()
 Vue.use(Vuetify, {
