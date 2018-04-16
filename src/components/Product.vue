@@ -104,6 +104,7 @@
 </template>
 
 <script>
+  import Vue from 'vue'
   import i18n from '@/i18n'
   import Rules from '@/rules'
   import ProductService from '../service/ProductService'
@@ -214,6 +215,7 @@
           setTimeout(function () {
             this.product.image = image.data
             this.currentUploadStatus = STATUS_INITIAL_UPLOAD
+            Vue.set(this.product, this.product)
           }.bind(this), 1000)
         }.bind(this)).catch(function (err) {
           this.uploadError = err.response
