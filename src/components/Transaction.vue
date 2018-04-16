@@ -79,7 +79,7 @@
                @click="showCompleteTransactionModal = true; showConfirmSnackbar= false">
           {{$t('aTransaction:completeTransaction')}}
         </v-btn>
-        <v-btn icon dark color="secondary" @click.native="showConfirmMsg= false">
+        <v-btn icon dark color="secondary" @click.native="showConfirmSnackbar = false">
           <v-icon>close</v-icon>
         </v-btn>
       </v-snackbar>
