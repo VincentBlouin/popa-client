@@ -35,6 +35,7 @@ import Store from '@/store'
 import Panel from '@/components/Panel'
 import DateUtil from '@/dateUtil'
 import CurrencyFilter from '@/currencyFilter'
+import IdleVue from 'idle-vue'
 
 Vue.component('panel', Panel)
 
@@ -43,6 +44,11 @@ Vue.use(VueParams)
 DateUtil.setup()
 CurrencyFilter.setup()
 i18n.setup()
+const eventsHub = new Vue()
+Vue.use(IdleVue, {
+  eventEmitter: eventsHub,
+  idleTime: 3 * 60 * 1000
+})
 Vue.use(Vuetify, {
   components: {
     VApp,

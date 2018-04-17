@@ -109,10 +109,10 @@
   import Rules from '@/rules'
   import ProductService from '../service/ProductService'
 
-  const STATUS_INITIAL_UPLOAD = 0,
-    STATUS_SAVING_UPLOAD = 1,
-    STATUS_SUCCESS_UPLOAD = 2,
-    STATUS_FAILED_UPLOAD = 3
+  const STATUS_INITIAL_UPLOAD = 0
+  const STATUS_SAVING_UPLOAD = 1
+  const STATUS_SUCCESS_UPLOAD = 2
+  const STATUS_FAILED_UPLOAD = 3
 
   export default {
     name: 'Product',

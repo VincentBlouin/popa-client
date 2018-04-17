@@ -157,7 +157,6 @@
         seconds: 'seconds',
         inactivity: 'Inactivité'
       })
-      this.disconnectAfterInactivity()
       return {
         showConfirmSnackbar: false,
         rules: Rules,
@@ -203,35 +202,6 @@
       extendSession: function () {
         clearInterval(this.ardoiseLogoutInterval)
         this.showSessionExpiredSuccess = false
-      },
-      disconnectAfterInactivity: function () {
-        let t
-        window.onload = resetTimer.bind(this)
-        document.onmousemove = resetTimer.bind(this)
-        document.onkeypress = resetTimer.bind(this)
-        document.onmousemove = resetTimer.bind(this)
-        document.onmousedown = resetTimer.bind(this) // touchscreen presses
-        document.ontouchstart = resetTimer.bind(this)
-        document.onclick = resetTimer.bind(this) // touchpad clicks
-        document.onscroll = resetTimer.bind(this) // scrolling with arrow keys
-
-        function showArdoiseLogoutDialog () {
-          clearTimeout(t)
-          this.logoutTimeout = 20
-          this.showSessionExpiredSuccess = true
-          this.ardoiseLogoutInterval = setInterval(function () {
-            this.logoutTimeout--
-            if (this.logoutTimeout <= 0) {
-              this.ardoiseLogout()
-            }
-          }.bind(this), 1000)
-        }
-
-        function resetTimer () {
-          console.log('timer reset')
-          clearTimeout(t)
-          t = setTimeout(showArdoiseLogoutDialog.bind(this), 120 * 1000)
-        }
       }
     },
     computed: {
@@ -241,6 +211,20 @@
         }
         return this.$t('aTransaction:anonymousTitle')
       }
+    },
+    onIdle () {
+      this.logoutTimeout = 20
+      this.showSessionExpiredSuccess = true
+      this.ardoiseLogoutInterval = setInterval(function () {
+        this.logoutTimeout--
+        if (this.logoutTimeout <= 0) {
+          clearInterval(
+            this.ardoiseLogoutInterval
+          )
+          this.ardoiseLogout()
+        }
+      }.bind(this), 1000)
+      this.showSessionExpiredSuccess = true
     }
   }
 </script>
