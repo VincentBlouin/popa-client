@@ -103,7 +103,7 @@
   import Vue from 'vue'
   import i18n from '@/i18n'
 
-  const loggedOutOnlyPages = ['Login', 'Register', 'ForgotPassword', 'ChangePassword']
+  const loggedOutOnlyPages = ['Login', 'Register', 'ForgotPassword', 'ChangePassword', 'SendChangePasswordEmail']
   export default {
     data () {
       i18n.i18next.addResources('en', 'header', {

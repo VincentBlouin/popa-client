@@ -8,7 +8,7 @@
         name="email"
         :label="$t('login:email')"
         required
-        :rules="[rules.required]"
+        :rules="[rules.required, rules.email]"
         v-model="email"
       ></v-text-field>
       <br>
@@ -20,7 +20,7 @@
         :rules="[rules.required]"
         v-model="password"
       ></v-text-field>
-      <router-link to="/forgot-password" color="accent">
+      <router-link to="/send-change-password-email" color="accent">
         {{$t('login:forgotPassword')}}
       </router-link>
     </v-form>
@@ -28,6 +28,23 @@
       @click="login" color="secondary">
       {{$t('login:connect')}}
     </v-btn>
+    <v-card>
+      <v-card-text class="text-xs-center">
+        <p class="subheading">
+          {{$t('login:loginIntro1')}}
+          <a href="mailto:potagerspartages@gmail.com">
+            potagerspartages@gmail.com
+          </a>
+          {{$t('login:loginIntro2')}}
+        </p>
+        <p class="subheading">
+          <router-link to="send-change-password-email">
+            {{$t('login:loginIntro3')}}
+          </router-link>
+          {{$t('login:loginIntro4')}}
+        </p>
+      </v-card-text>
+    </v-card>
   </panel>
 </template>
 
@@ -43,16 +60,24 @@
         email: 'email',
         password: 'password',
         connect: 'Login',
-        forgotPassword: 'Forgot Password',
-        wrongPasswordOrUser: 'Wrong email or password'
+        forgotPassword: 'Change password',
+        wrongPasswordOrUser: 'Wrong email or password',
+        loginIntro1: 'Contact',
+        loginIntro2: 'to register',
+        loginIntro3: 'Change your password',
+        loginIntro4: 'before you login for the first time'
       })
       i18next.addResources('fr', 'login', {
         title: 'Connexion',
         email: 'courriel',
         password: 'mot de passe',
         connect: 'Se connecter',
-        forgotPassword: 'Mot de passe oublié',
-        wrongPasswordOrUser: 'Mauvais courriel ou mot de passe'
+        forgotPassword: 'Modifier votre mot de passe',
+        wrongPasswordOrUser: 'Mauvais courriel ou mot de passe',
+        loginIntro1: 'Contactez',
+        loginIntro2: 'pour vous inscrire',
+        loginIntro3: 'Modifiez votre mot de passe',
+        loginIntro4: 'avant de vous connecter pour la première fois'
       })
       return {
         email: '',

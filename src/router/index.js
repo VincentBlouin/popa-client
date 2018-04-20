@@ -10,6 +10,8 @@ import ArdoiseLanding from '@/components/ArdoiseLanding'
 import Subscribe from '@/components/Subscribe'
 import Transaction from '@/components/Transaction'
 import TransactionItems from '@/components/TransactionItems'
+import SendChangePasswordEmail from '@/components/SendChangePasswordEmail'
+import ChangePassword from '@/components/ChangePassword'
 
 Vue.use(Router)
 
@@ -70,6 +72,16 @@ export default new Router({
       path: '/transactions-items',
       name: 'TransactionItems',
       component: TransactionItems
+    },
+    {
+      path: '/send-change-password-email',
+      name: 'SendChangePasswordEmail',
+      component: SendChangePasswordEmail
+    },
+    {
+      path: '/change-password/:token',
+      name: 'ChangePassword',
+      component: ChangePassword
     }
     // {
     //   path: '/',
