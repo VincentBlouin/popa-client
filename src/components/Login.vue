@@ -38,6 +38,7 @@
           {{$t('login:loginIntro2')}}
         </p>
         <p class="subheading">
+          {{$t('login:loginIntro21')}}
           <router-link to="send-change-password-email">
             {{$t('login:loginIntro3')}}
           </router-link>
@@ -64,7 +65,8 @@
         wrongPasswordOrUser: 'Wrong email or password',
         loginIntro1: 'Contact',
         loginIntro2: 'to register',
-        loginIntro3: 'Change your password',
+        loginIntro21: 'Once registered,',
+        loginIntro3: 'change your password',
         loginIntro4: 'before you login for the first time'
       })
       i18next.addResources('fr', 'login', {
@@ -76,7 +78,8 @@
         wrongPasswordOrUser: 'Mauvais courriel ou mot de passe',
         loginIntro1: 'Contactez',
         loginIntro2: 'pour vous inscrire',
-        loginIntro3: 'Modifiez votre mot de passe',
+        loginIntro21: 'Une fois inscrit, ',
+        loginIntro3: 'modifiez votre mot de passe',
         loginIntro4: 'avant de vous connecter pour la première fois'
       })
       return {

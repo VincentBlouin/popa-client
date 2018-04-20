@@ -13,7 +13,7 @@
       <v-list>
         <v-list-tile
           value="true"
-          v-for="(item, i) in items"
+          v-for="(item, i) in menuItems"
           :key="i"
           @click="goTo(item.path)"
         >
@@ -112,7 +112,9 @@
         requestError: 'There\'s a connection problem with our server. Try again later.',
         subscriber: 'Subscribers',
         products: 'Products',
-        transactions: 'Transactions'
+        transactions: 'Transactions',
+        accountStatement: 'Account statement',
+        transaction: 'Transaction'
       })
       i18n.i18next.addResources('fr', 'header', {
         title: 'Panier libre service Potagers Partagés',
@@ -120,7 +122,9 @@
         requestError: 'Il y a un problème de connexion avec notre serveur. Essayez de nouveau plus tard.',
         subscriber: 'Abonnés',
         products: 'Produits',
-        transactions: 'Transactions'
+        transactions: 'Transactions',
+        accountStatement: 'Relevé de compte',
+        transaction: 'Transaction'
       })
       return {
         clipped: false,
@@ -138,6 +142,15 @@
           icon: 'assignment',
           title: 'header:transactions',
           path: '/transactions-items'
+        }],
+        subscriberItems: [{
+          icon: 'assignment',
+          title: 'header:accountStatement',
+          path: '/account-statement'
+        }, {
+          icon: 'shopping_basket',
+          title: 'header:transaction',
+          path: '/client-transaction'
         }],
         miniVariant: false,
         right: true,
@@ -185,6 +198,11 @@
     },
     beforeUpdate: function () {
       this.redirectIfOnWrongPage()
+    },
+    computed: {
+      menuItems: function () {
+        return this.$store.state.user.status === 'admin' ? this.items : this.subscriberItems
+      }
     }
   }
 </script>

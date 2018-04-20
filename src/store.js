@@ -65,7 +65,7 @@ function getBaseComponentFromState (state) {
       return 'ArdoiseLanding'
     case 'admin':
       return 'Subscribers'
-    case null:
-      return 'Subscribers'
+    case 'subscribed':
+      return 'AccountStatementPage'
   }
 }

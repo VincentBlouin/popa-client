@@ -170,6 +170,9 @@
       },
       isArdoiseUser: function () {
         return this.ardoiseUser !== null
+      },
+      isSubscribedUserFlow: function () {
+        return this.isArdoiseUser && this.$store.state.user.id === this.ardoiseUser.id
       }
     },
     watch: {
@@ -192,6 +195,11 @@
           this.transactionItems
         )
         transaction.then(function (transaction) {
+          if (this.isSubscribedUserFlow) {
+            return this.$router.push({
+              name: 'AccountStatementPage'
+            })
+          }
           this.balance = parseFloat(transaction.data.balance)
           this.disconnectTimeout = 20
           this.showTransactionMsgSuccess = true

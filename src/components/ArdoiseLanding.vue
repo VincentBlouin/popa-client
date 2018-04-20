@@ -109,7 +109,7 @@
           const user = _user.data
           this.$store.dispatch('setArdoiseUser', user)
           this.$router.push({
-            name: 'Transaction'
+            name: 'ArdoiseTransaction'
           })
           if (user.locale) {
             this.$store.dispatch('setLocale', user.locale)

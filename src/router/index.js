@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import Account from '@/components/Account'
+import AccountStatementPage from '@/components/AccountStatementPage'
 import Login from '@/components/Login'
 import Subscribers from '@/components/Subscribers'
 import Subscriber from '@/components/Subscriber'
@@ -8,10 +8,11 @@ import Products from '@/components/Products'
 import Product from '@/components/Product'
 import ArdoiseLanding from '@/components/ArdoiseLanding'
 import Subscribe from '@/components/Subscribe'
-import Transaction from '@/components/Transaction'
+import ArdoiseTransaction from '@/components/ArdoiseTransaction'
 import TransactionItems from '@/components/TransactionItems'
 import SendChangePasswordEmail from '@/components/SendChangePasswordEmail'
 import ChangePassword from '@/components/ChangePassword'
+import ClientTransaction from '@/components/ClientTransaction'
 
 Vue.use(Router)
 
@@ -65,8 +66,8 @@ export default new Router({
     },
     {
       path: '/transaction',
-      name: 'Transaction',
-      component: Transaction
+      name: 'ArdoiseTransaction',
+      component: ArdoiseTransaction
     },
     {
       path: '/transactions-items',
@@ -82,11 +83,16 @@ export default new Router({
       path: '/change-password/:token',
       name: 'ChangePassword',
       component: ChangePassword
+    },
+    {
+      path: '/client-transaction',
+      name: 'ClientTransaction',
+      component: ClientTransaction
+    },
+    {
+      path: '/account-statement',
+      name: 'AccountStatementPage',
+      component: AccountStatementPage
     }
-    // {
-    //   path: '/',
-    //   name: 'Account',
-    //   component: Account
-    // }
   ]
 })
