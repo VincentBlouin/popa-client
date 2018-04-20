@@ -6,7 +6,7 @@
       :clipped="clipped"
       v-model="drawer"
       enable-resize-watcher
-      v-if="$store.state.isUserLoggedIn && $store.state.user.status !== 'ardoise'"
+      v-if="isUserOtherThanArdoise"
       fixed
       app
     >
@@ -35,7 +35,7 @@
       :clipped-left="clipped"
     >
       <v-toolbar-side-icon @click.stop="drawer = !drawer"
-                           v-if="$store.state.isUserLoggedIn && $store.state.user.status != 'ardoise'"></v-toolbar-side-icon>
+                           v-if="isUserOtherThanArdoise"></v-toolbar-side-icon>
       <!--<v-btn icon @click.stop="miniVariant = !miniVariant">-->
       <!--<v-icon v-html="miniVariant ? 'chevron_right' : 'chevron_left'"></v-icon>-->
       <!--</v-btn>-->
@@ -52,8 +52,17 @@
         {{$t('header:title')}}
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
+      <v-btn icon @click.stop="rightDrawer = !rightDrawer" v-if="isUserOtherThanArdoise">
         <v-icon>settings</v-icon>
+      </v-btn>
+      <v-btn flat v-if="!$store.state.isUserLoggedIn || !isUserOtherThanArdoise" @click="switchLanguage()">
+        <v-icon class="mr-2">public</v-icon>
+        <span v-if="$store.state.locale === 'fr'">
+          English
+        </span>
+        <span v-if="$store.state.locale === 'en'">
+          Français
+        </span>
       </v-btn>
     </v-toolbar>
     <v-content>
@@ -81,7 +90,7 @@
             </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
-        <v-list-tile @click="logout()" v-if="$store.state.user && $store.state.user.status !== 'ardoise'">
+        <v-list-tile @click="logout()" v-if="isUserOtherThanArdoise">
           <v-list-tile-action>
             <v-icon>exit_to_app</v-icon>
           </v-list-tile-action>
@@ -200,6 +209,9 @@
       this.redirectIfOnWrongPage()
     },
     computed: {
+      isUserOtherThanArdoise: function () {
+        return this.$store.state.isUserLoggedIn && this.$store.state.user.status !== 'ardoise'
+      },
       menuItems: function () {
         return this.$store.state.user.status === 'admin' ? this.items : this.subscriberItems
       }

@@ -88,7 +88,7 @@
       })
       return {
         pagination: {
-          sortBy: 'createdAt',
+          sortBy: 'TransactionId',
           descending: true,
           rowsPerPage: -1
         },
