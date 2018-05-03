@@ -6,6 +6,7 @@ import VueI18Next from 'vue-i18next'
 
 const i18n = {
   setup: function () {
+    window.i18next = i18next
     Vue.use(VueI18Next)
     let savedLocale = Store.state.locale
     if (!savedLocale) {
