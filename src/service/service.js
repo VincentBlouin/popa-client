@@ -3,7 +3,7 @@ import Store from '@/store'
 
 const Service = {
   baseUrl: function () {
-    return location.protocol + '//' + location.hostname + ':3000'
+    return location.protocol + '//' + location.hostname + ':8081'
   },
   api: function () {
     const loginPages = [
