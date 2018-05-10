@@ -1,5 +1,6 @@
 import axios from 'axios'
 import Store from '@/store'
+import RequestErrors from '@/requestError'
 
 const Service = {
   baseUrl: function () {
@@ -17,12 +18,15 @@ const Service = {
       }
     })
     axiosInstance.interceptors.response.use(null, function (error) {
-      if (error.response.status === 401) {
+      if (error.response && error.response.status === 401) {
         Store.dispatch('setToken', null)
         Store.dispatch('setUser', null)
         if (loginPages.indexOf(window.location.pathname) === -1) {
           window.location.href = '/'
         }
+      }
+      if (!error.response || [403, 401].indexOf(error.response.status) === -1) {
+        RequestErrors.addRequestError(error)
       }
       return Promise.reject(error)
     })

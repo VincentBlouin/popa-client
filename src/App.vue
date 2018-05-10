@@ -105,12 +105,25 @@
     <v-footer :fixed="fixed" app>
       <span></span>
     </v-footer>
+    <v-snackbar
+      color="error"
+      multi-line
+      :timeout="10000"
+      vertical
+      v-model="showRequestErrorMessage"
+    >
+      {{ $t('header:requestError') }}
+      <v-btn left flat @click.native="showRequestErrorMessage = false">
+        {{$t('close')}}
+      </v-btn>
+    </v-snackbar>
   </v-app>
 </template>
 
 <script>
   import Vue from 'vue'
   import i18n from '@/i18n'
+  import RequestErrors from '@/requestError'
 
   const loggedOutOnlyPages = ['Login', 'Register', 'ForgotPassword', 'ChangePassword', 'SendChangePasswordEmail']
   export default {
@@ -163,7 +176,9 @@
         }],
         miniVariant: false,
         right: true,
-        rightDrawer: false
+        rightDrawer: false,
+        showRequestErrorMessage: false,
+        requestErrors: RequestErrors.requestErrors
       }
     },
     name: 'App',
@@ -214,6 +229,11 @@
       },
       menuItems: function () {
         return this.$store.state.user.status === 'admin' ? this.items : this.subscriberItems
+      }
+    },
+    watch: {
+      requestErrors: function () {
+        this.showRequestErrorMessage = true;
       }
     }
   }
