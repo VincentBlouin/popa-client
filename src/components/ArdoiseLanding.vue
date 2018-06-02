@@ -21,6 +21,7 @@
                     type="password"
                     :rules="[rules.required]"
                     v-model="ardoiseIdentifier"
+                    ref="ardoiseIdentifierTextField"
                   ></v-text-field>
                   <v-btn
                     @click="ardoiseLogin" color="secondary">
@@ -48,7 +49,15 @@
                   {{$t('landing:subscribe')}}
                 </v-btn>
               </v-card-text>
-              <v-card-actions></v-card-actions>
+              <v-card-actions>
+                <!--<v-spacer></v-spacer>-->
+                <!--<v-btn @click="goFullScreen" color="primary" v-if="canFullScreen">-->
+                  <!--Plein écran-->
+                <!--</v-btn>-->
+                <!--<v-btn @click="exitFullScreen" color="primary" v-if="canFullScreen">-->
+                  <!--Sortir plein écran-->
+                <!--</v-btn>-->
+              </v-card-actions>
             </v-card>
           </v-flex>
         </v-layout>
@@ -100,6 +109,16 @@
           window.location.href = '/login'
           return
         }
+        if (this.ardoiseIdentifier.trim() === 'plein') {
+          document.documentElement.webkitRequestFullScreen()
+          this.$refs.ardoiseIdentifierTextField.reset()
+          return
+        }
+        if (this.ardoiseIdentifier.trim() === 'petit') {
+          document.webkitExitFullscreen()
+          this.$refs.ardoiseIdentifierTextField.reset()
+          return
+        }
         if (this.ardoiseIdentifier.trim() === '') {
           return
         }
@@ -117,12 +136,19 @@
         }.bind(this)).catch(function (error) {
           this.error = error.response.data.error
         }.bind(this))
+      },
+      goFullScreen: function () {
+        document.documentElement.webkitRequestFullScreen()
+        this.canFullScreen = false
+      },
+      exitFullScreen: function () {
+        document.exitFullscreen()
+        this.canFullScreen = false
       }
     },
     mounted: function () {
       this.$store.dispatch('setArdoiseUser', null)
     }
-
   }
 </script>
 
