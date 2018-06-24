@@ -35,6 +35,7 @@
             {{ props.item.balance | currency }}
           </td>
           <td>{{ props.item.createdAt | dayDate}}</td>
+          <td>{{ props.item.latestTransaction.createdAt | dayDate}}</td>
           <td>
             <v-btn icon class="mx-0" @click="editUser(props.item)">
               <v-icon color="secondary">edit</v-icon>
@@ -66,7 +67,8 @@
         noResults2: 'found no results',
         status: 'Status',
         date: 'Creation day',
-        balance: 'Balance'
+        balance: 'Balance',
+        lastTransaction: 'Last transaction'
       })
       i18n.i18next.addResources('fr', 'subscribers', {
         title: 'Abonnés',
@@ -76,7 +78,8 @@
         noResults2: 'n\'a retourné aucun résultat',
         status: 'Statut',
         date: 'Jour de création',
-        balance: 'Solde'
+        balance: 'Solde',
+        lastTransaction: 'Dernière Transaction'
       })
       return {
         pagination: {
@@ -104,6 +107,10 @@
           {
             text: Vue.t('subscribers:date'),
             value: 'createdAt'
+          },
+          {
+            text: Vue.t('subscribers:lastTransaction'),
+            value: 'latestTransaction.createdAt'
           },
           {
             text: '',
