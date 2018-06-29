@@ -1,6 +1,6 @@
 <template>
   <panel :title="title">
-    <v-card>
+    <v-card raised class="mt-4 mb-4">
       <v-card-text>
         <v-form name="subscriberForm" ref="subscriberForm">
           <v-text-field
@@ -44,17 +44,40 @@
         </v-btn>
       </v-card-actions>
     </v-card>
-    <v-card v-if="!isCreate">
+    <v-divider></v-divider>
+    <v-card v-if="!isCreate" raised class="mt-4 mb-4">
+      <v-card-title>
+        {{$t('subscriber:addFund')}}
+      </v-card-title>
       <v-card-text>
         <v-text-field
           type="number"
           min="0"
-          :label="$t('subscriber:addFund')"
+          :label="$t('subscriber:fundAmount')"
           v-model="basketDeposit"
         ></v-text-field>
       </v-card-text>
       <v-card-actions>
         <v-btn color="primary" @click="addFund()" v-if="!isCreate">
+          {{$t('subscriber:add')}}
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+    <v-divider></v-divider>
+    <v-card v-if="!isCreate" raised class="mt-4 mb-4">
+      <v-card-title>
+        {{$t('subscriber:addPenalty')}}
+      </v-card-title>
+      <v-card-text>
+        <v-text-field
+          type="number"
+          min="0"
+          :label="$t('subscriber:addPenalty')"
+          v-model="penaltyAmount"
+        ></v-text-field>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn color="primary" @click="addPenalty()" v-if="!isCreate">
           {{$t('subscriber:add')}}
         </v-btn>
       </v-card-actions>
@@ -88,7 +111,10 @@
         ardoisePassword: 'Ardoise password',
         add: 'Add',
         edit: 'Modify',
+        fundAmount: 'Amount to add to account',
         addFund: 'Add fund to basket',
+        penaltyFee: 'Penalty fee',
+        addPenalty: 'Add no transactions fee',
         language: 'Language'
       })
       i18n.i18next.addResources('fr', 'subscriber', {
@@ -100,7 +126,10 @@
         ardoisePassword: 'Mot de passe d\'ardoise',
         add: 'Ajouter',
         edit: 'Modifier',
+        fundAmount: 'Montant d\'ajout au compte',
         addFund: 'Ajouter fonds dans le panier',
+        penaltyFee: 'Frais de pénalité',
+        addPenalty: 'Ajouter un frais d\'absence de transactions',
         language: 'Langue'
       })
       return {
@@ -114,7 +143,8 @@
         }, {
           text: 'en',
           value: 'en'
-        }]
+        }],
+        penaltyAmount: null
       }
     },
     methods: {
@@ -146,6 +176,22 @@
         const amount = this.basketDeposit
         this.basketDeposit = null
         TransactionService.addFundToSubscriber(
+          amount,
+          this.subscriber
+        ).then(function () {
+          this.refreshAccountStatement = true
+          Vue.nextTick(function () {
+            this.refreshAccountStatement = false
+          }.bind(this))
+        }.bind(this))
+      },
+      addPenalty: function () {
+        if (!this.penaltyAmount || this.penaltyAmount <= 0) {
+          return
+        }
+        const amount = this.penaltyAmount
+        this.penaltyAmount = null
+        TransactionService.addPenaltyToSubscriber(
           amount,
           this.subscriber
         ).then(function () {

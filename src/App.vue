@@ -233,7 +233,7 @@
     },
     watch: {
       requestErrors: function () {
-        this.showRequestErrorMessage = true;
+        this.showRequestErrorMessage = true
       }
     }
   }

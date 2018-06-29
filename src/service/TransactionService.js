@@ -30,5 +30,14 @@ export default {
         subscriberId: subscriber.id
       }
     )
+  },
+  addPenaltyToSubscriber: function (amount, subscriber) {
+    return Service.api().post(
+      '/transaction/penalty',
+      {
+        amount: amount,
+        subscriberId: subscriber.id
+      }
+    )
   }
 }

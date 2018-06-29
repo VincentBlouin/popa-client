@@ -35,7 +35,9 @@
             {{ props.item.balance | currency }}
           </td>
           <td>{{ props.item.createdAt | dayDate}}</td>
-          <td>{{ props.item.latestTransaction.createdAt | dayDate}}</td>
+          <td>
+            {{ props.item.latestTransaction | dayDate}}
+          </td>
           <td>
             <v-btn icon class="mx-0" @click="editUser(props.item)">
               <v-icon color="secondary">edit</v-icon>
