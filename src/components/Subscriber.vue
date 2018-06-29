@@ -72,7 +72,7 @@
         <v-text-field
           type="number"
           min="0"
-          :label="$t('subscriber:addPenalty')"
+          :label="$t('subscriber:penaltyFee')"
           v-model="penaltyAmount"
         ></v-text-field>
       </v-card-text>
