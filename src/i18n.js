@@ -34,7 +34,8 @@ const i18n = {
             notSubscribed: 'Pas inscris',
             subscribed: 'Inscris',
             details: 'détails',
-            invalidEmail: 'courriel invalide'
+            invalidEmail: 'courriel invalide',
+            cancel: 'Annuler'
           }
         },
         en: {
@@ -52,7 +53,8 @@ const i18n = {
             notSubscribed: 'Not subscribed',
             subscribed: 'Subscribed',
             details: 'details',
-            invalidEmail: 'invalid email'
+            invalidEmail: 'invalid email',
+            cancel: 'Cancel'
           }
         }
       }

@@ -1,5 +1,8 @@
 <template>
   <div>
+    <v-btn color="primary" @click="back">
+      {{$t('cancel')}}
+    </v-btn>
     <v-subheader>
       <div>
         {{$t('transaction:itemsOfPurchase')}}
@@ -145,6 +148,9 @@
       }.bind(this))
     },
     methods: {
+      back: function () {
+        window.history.back()
+      },
       incrementQuantityForItem: function (item) {
         item.quantity++
         this.showConfirmSnackbar = true

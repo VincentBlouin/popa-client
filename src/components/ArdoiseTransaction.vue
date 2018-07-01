@@ -8,14 +8,14 @@
     >
       <v-card>
         <v-card-title class="headline text-xs-center">
-          {{$t('transaction:inactivity')}}
+          {{$t('aTransaction:inactivity')}}
         </v-card-title>
         <v-card-text>
-          {{$t('transaction:beDisconnected')}} {{logoutTimeout}} {{$t('transaction:seconds')}}
+          {{$t('aTransaction:beDisconnected')}} {{logoutTimeout}} {{$t('aTransaction:seconds')}}
         </v-card-text>
         <v-card-actions>
           <v-btn color="primary" class="pull-right" @click="extendSession()">
-            {{$t('transaction:extendSession')}}
+            {{$t('aTransaction:extendSession')}}
           </v-btn>
         </v-card-actions>
       </v-card>
