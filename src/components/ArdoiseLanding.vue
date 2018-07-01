@@ -40,22 +40,31 @@
                 </div>
               </v-card-title>
               <v-card-text>
-                <v-btn
-                  to="/transaction" color="primary">
-                  {{$t('landing:buyOnce')}}
-                </v-btn>
-                <v-btn
-                  to="/subscribe" color="secondary">
-                  {{$t('landing:subscribe')}}
-                </v-btn>
+                <p>
+                  <v-btn
+                    to="/transaction" color="primary">
+                    {{$t('landing:buyOnce')}}
+                  </v-btn>
+                </p>
+                <p class="subheading pb-0 mb-0">
+                  {{$t('landing:toSubscribe')}}
+                </p>
+                <ul class="subheading ml-4 mt-0 pt-0">
+                  <li>
+                    potagerspartages@gmail.com
+                  </li>
+                  <li>
+                    418-751-3669
+                  </li>
+                </ul>
               </v-card-text>
               <v-card-actions>
                 <!--<v-spacer></v-spacer>-->
                 <!--<v-btn @click="goFullScreen" color="primary" v-if="canFullScreen">-->
-                  <!--Plein écran-->
+                <!--Plein écran-->
                 <!--</v-btn>-->
                 <!--<v-btn @click="exitFullScreen" color="primary" v-if="canFullScreen">-->
-                  <!--Sortir plein écran-->
+                <!--Sortir plein écran-->
                 <!--</v-btn>-->
               </v-card-actions>
             </v-card>
@@ -82,7 +91,8 @@
         identify: 'sign in',
         subscribe: 'become a subscriber',
         buyOnce: 'Purchase now',
-        wrongLogin: 'Wrong subscriber code'
+        wrongLogin: 'Wrong subscriber code',
+        toSubscribe: 'If you wish to subscribe, contact us'
       })
       i18n.i18next.addResources('fr', 'landing', {
         title: 'Achat de légumes',
@@ -92,7 +102,8 @@
         identify: 'se connecter',
         subscribe: 'devenir abonné',
         buyOnce: 'Faire un achat maintenant',
-        wrongLogin: 'Mauvais code d\'abonné'
+        wrongLogin: 'Mauvais code d\'abonné',
+        toSubscribe: 'Si vous désirez vous abonner, contactez nous'
       })
       return {
         ardoiseIdentifier: '',
