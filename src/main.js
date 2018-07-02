@@ -47,7 +47,7 @@ i18n.setup()
 const eventsHub = new Vue()
 Vue.use(IdleVue, {
   eventEmitter: eventsHub,
-  idleTime: 60 * 1000
+  idleTime: 2 * 60 * 1000
 })
 Vue.use(Vuetify, {
   components: {

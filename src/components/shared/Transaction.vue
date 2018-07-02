@@ -14,7 +14,7 @@
       {{$t('transaction:products')}}
     </v-subheader>
     <v-layout row wrap style="">
-      <v-flex xs12 sm4 md4 lg2 v-for="product in products">
+      <v-flex xs12 sm6 md4 lg2 v-for="product in products">
         <v-card class="mr-3 mb-3">
           <v-card-media
             class="white--text"
