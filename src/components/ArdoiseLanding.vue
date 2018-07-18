@@ -49,14 +49,24 @@
                 <p class="subheading pb-0 mb-0">
                   {{$t('landing:toSubscribe')}}
                 </p>
-                <ul class="subheading ml-4 mt-0 pt-0">
-                  <li>
-                    potagerspartages@gmail.com
-                  </li>
-                  <li>
-                    418-751-3669
-                  </li>
-                </ul>
+                <v-list>
+                  <v-list-tile inactive>
+                    <v-list-tile-action>
+                      <v-icon color="secondary">email</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                      potagerspartages@gmail.com
+                    </v-list-tile-content>
+                  </v-list-tile>
+                  <v-list-tile href="tel:+4187513669">
+                    <v-list-tile-action>
+                      <v-icon color="secondary">phone</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                      418-751-3669
+                    </v-list-tile-content>
+                  </v-list-tile>
+                </v-list>
               </v-card-text>
               <v-card-actions>
                 <!--<v-spacer></v-spacer>-->

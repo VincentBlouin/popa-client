@@ -36,7 +36,7 @@
                  :disabled="transactionItems.length === 0"
                  v-if="!areTransactionsCommited"
           >
-            {{$t('aTransaction:completeTransaction')}}
+            {{$t('details:completeTransaction')}}
           </v-btn>
           <small v-if="areTransactionsCommited && products">
             <strong>
@@ -104,7 +104,8 @@
         beRedirected: 'You will be redirected in',
         redirectNow: 'Redirect now',
         seconds: 'seconds',
-        thankYou: 'Thank you, do not forget to pay the amount of'
+        thankYou: 'Thank you, do not forget to pay the amount of',
+        completeTransaction: 'Complete transaction',
       })
       i18n.i18next.addResources('fr', 'details', {
         noItemsOfPurchase: 'Pas encore d\'items',
@@ -112,7 +113,8 @@
         beRedirected: 'Vous serez redirigé dans',
         redirectNow: 'Rediriger maintenant',
         seconds: 'secondes',
-        thankYou: 'Merci, n\'oubliez pas de payer le montant de'
+        thankYou: 'Merci, n\'oubliez pas de payer le montant de',
+        completeTransaction: 'Compléter la transaction',
       })
       return {
         pagination: {
@@ -215,7 +217,7 @@
         if (this.areTransactionsCommited) {
           return product.totalPrice - product.totalPriceAfterRebate
         }
-        if (this.isArdoiseUser) {
+        if (this.isArdoiseUser && this.ardoiseUser.hasRebate) {
           return (product.quantity * product.unitPrice) * 0.1
         }
         return 0

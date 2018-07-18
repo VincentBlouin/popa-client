@@ -112,7 +112,7 @@
           },
           {
             text: Vue.t('subscribers:lastTransaction'),
-            value: 'latestTransaction.createdAt'
+            value: 'latestTransaction'
           },
           {
             text: '',

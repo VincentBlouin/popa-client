@@ -3,6 +3,10 @@
     <v-card raised class="mt-4 mb-4">
       <v-card-text>
         <v-form name="subscriberForm" ref="subscriberForm">
+          <v-checkbox
+            :label="$t('subscriber:hasRebate')"
+            v-model="subscriber.hasRebate"
+          />
           <v-text-field
             :label="$t('subscriber:email')"
             v-model="subscriber.email"
@@ -115,7 +119,8 @@
         addFund: 'Add fund to basket',
         penaltyFee: 'Penalty fee',
         addPenalty: 'Add no transactions fee',
-        language: 'Language'
+        language: 'Language',
+        hasRebate: 'Has 10% rebate'
       })
       i18n.i18next.addResources('fr', 'subscriber', {
         addTitle: 'Ajouter un abonné',
@@ -130,7 +135,8 @@
         addFund: 'Ajouter fonds dans le panier',
         penaltyFee: 'Frais de pénalité',
         addPenalty: 'Ajouter un frais d\'absence de transactions',
-        language: 'Langue'
+        language: 'Langue',
+        hasRebate: 'A le rabais de 10%'
       })
       return {
         subscriber: {},
