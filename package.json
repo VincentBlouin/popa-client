@@ -13,9 +13,9 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "vue": "^2.5.16",
+    "vue": "2.5.16",
     "vue-router": "^3.0.1",
-    "vuetify": "^1.0.0",
+    "vuetify": "1.0.0",
     "i18next": "^11.2.3",
     "i18next-browser-languagedetector": "^2.2.0",
     "vue-i18next": "^0.9.1",
