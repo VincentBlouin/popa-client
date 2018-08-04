@@ -105,7 +105,7 @@
         redirectNow: 'Redirect now',
         seconds: 'seconds',
         thankYou: 'Thank you, do not forget to pay the amount of',
-        completeTransaction: 'Complete transaction',
+        completeTransaction: 'Complete transaction'
       })
       i18n.i18next.addResources('fr', 'details', {
         noItemsOfPurchase: 'Pas encore d\'items',
@@ -114,7 +114,7 @@
         redirectNow: 'Rediriger maintenant',
         seconds: 'secondes',
         thankYou: 'Merci, n\'oubliez pas de payer le montant de',
-        completeTransaction: 'Compléter la transaction',
+        completeTransaction: 'Compléter la transaction'
       })
       return {
         pagination: {

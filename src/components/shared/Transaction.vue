@@ -140,11 +140,17 @@
       }
     },
     mounted: function () {
-      ProductService.listAvailable().then(function (products) {
-        products.data.forEach(function (product) {
+      ProductService.listAvailable().then(function (response) {
+        response.data.forEach(function (product) {
           product.quantity = 0
         })
-        this.products = products.data
+        this.products = response.data.sort(function (a, b) {
+          var aText = i18n.getText(a.name)
+          var bText = i18n.getText(b.name)
+          if (aText < bText) return -1
+          if (aText > bText) return 1
+          return 0
+        })
       }.bind(this))
     },
     methods: {
