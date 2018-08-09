@@ -145,8 +145,8 @@
           product.quantity = 0
         })
         this.products = response.data.sort(function (a, b) {
-          var aText = i18n.getText(a.name)
-          var bText = i18n.getText(b.name)
+          let aText = i18n.getText(a.name).toLowerCase()
+          let bText = i18n.getText(b.name).toLowerCase()
           if (aText < bText) return -1
           if (aText > bText) return 1
           return 0
