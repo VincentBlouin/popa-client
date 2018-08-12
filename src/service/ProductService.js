@@ -20,6 +20,9 @@ export default {
     return Service.api().post('/product/image', formData)
   },
   getImageUrl: function (product) {
+    if (product.image === null) {
+      return ''
+    }
     return Service.baseUrl() + '/product/image/' + product.image.fileName
   }
 }
