@@ -17,7 +17,6 @@
       <v-data-table
         :headers="headers"
         :items="transactionItemsFiltered"
-        hide-actions
         disable-initial-sort
         class="elevation-1"
         :pagination.sync="pagination"
