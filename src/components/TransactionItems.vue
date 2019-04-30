@@ -94,7 +94,7 @@
         pagination: {
           sortBy: 'TransactionId',
           descending: true,
-          rowsPerPage: 5
+          rowsPerPage: 100
         },
         headers: [
           {
