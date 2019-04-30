@@ -10,10 +10,13 @@
           v-model="search"
         ></v-text-field>
       </v-card-title>
+      <v-card-title>
+        <span class="font-weight-black mr-1">{{quantityForFilteredTransactionItems}}</span>:
+        {{$t('transactions:quantitySum')}}
+      </v-card-title>
       <v-data-table
         :headers="headers"
-        :items="transactionItems"
-        :search="search"
+        :items="transactionItemsFiltered"
         hide-actions
         disable-initial-sort
         class="elevation-1"
@@ -58,9 +61,10 @@
 
   export default {
     name: 'Products',
-    data () {
+    data() {
       i18n.i18next.addResources('en', 'transactions', {
         title: 'Transaction items',
+        quantitySum: 'sum of the quantities of filtered transactions',
         name: 'Name',
         billNumber: 'Bill #',
         format: 'Format',
@@ -75,6 +79,7 @@
       })
       i18n.i18next.addResources('fr', 'transactions', {
         title: 'Items de transactions',
+        quantitySum: 'somme des quantités des transactions filtrés',
         billNumber: '# Facture',
         name: 'Nom',
         format: 'Format',
@@ -90,7 +95,7 @@
         pagination: {
           sortBy: 'TransactionId',
           descending: true,
-          rowsPerPage: -1
+          rowsPerPage: 5
         },
         headers: [
           {
@@ -141,6 +146,18 @@
           return item
         })
       }.bind(this))
+    },
+    computed: {
+      transactionItemsFiltered: function () {
+        return this.transactionItems.filter((transactionItem) => {
+          return transactionItem.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
+        });
+      },
+      quantityForFilteredTransactionItems: function () {
+        return this.transactionItemsFiltered.reduce(function (sum, item) {
+          return sum + item.quantity;
+        }, 0)
+      }
     }
   }
 </script>
