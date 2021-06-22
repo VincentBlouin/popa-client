@@ -4,7 +4,7 @@ import RequestErrors from '@/requestError'
 
 const Service = {
   baseUrl: function () {
-    return location.protocol + '//' + location.hostname + ':3500'
+    return location.protocol + '//' + location.hostname + '/api'
   },
   api: function () {
     const loginPages = [
