@@ -58,12 +58,12 @@
                       potagerspartages@gmail.com
                     </v-list-tile-content>
                   </v-list-tile>
-                  <v-list-tile href="tel:+4187513669">
+                  <v-list-tile href="tel:+5812337672">
                     <v-list-tile-action>
                       <v-icon color="secondary">phone</v-icon>
                     </v-list-tile-action>
                     <v-list-tile-content>
-                      418-751-3669
+                      581-233-7672
                     </v-list-tile-content>
                   </v-list-tile>
                 </v-list>
