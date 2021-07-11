@@ -4,8 +4,8 @@ import RequestErrors from '@/requestError'
 
 const Service = {
   baseUrl: function () {
-
-    return location.protocol + '//' + location.hostname + '/api'
+    let apiPort = window.location.protocol.indexOf('https') > -1 ? '443' : '3500'
+    return location.protocol + '//' + location.hostname + ':' + apiPort + '/api'
   },
   api: function () {
     const loginPages = [
