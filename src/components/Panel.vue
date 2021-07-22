@@ -1,6 +1,6 @@
 <template>
-  <v-container fluid class='panel pt-2 pb2' :class="{
-                'pl-2 pr-2': $vuetify.breakpoint.mdAndUp,
+  <v-container fluid class='panel pt-6 pb-6' :class="{
+                'pl-6 pr-6': $vuetify.breakpoint.mdAndUp,
                 'pl-0 pr-0': $vuetify.breakpoint.smAndDown
             }">
     <v-slide-y-transition mode="out-in">
@@ -9,13 +9,13 @@
           <div class="white elevation-2">
             <v-toolbar flat dense color="secondary" dark>
               <v-toolbar-title>
-                {{title}}
+                {{ title }}
               </v-toolbar-title>
             </v-toolbar>
             <div class="pt-2 pb-2 pl-2 pr-2"
             >
               <slot>
-                {{noContent || $t('noContent')}}
+                {{ noContent || $t('noContent') }}
               </slot>
             </div>
           </div>
@@ -26,14 +26,15 @@
 </template>
 
 <script>
-  export default {
-    name: 'panel',
-    props: [
-      'title',
-      'noContent',
-      'small'
-    ]
-  }
+
+export default {
+  name: 'panel',
+  props: [
+    'title',
+    'noContent',
+    'small'
+  ]
+}
 </script>
 
 <style scoped>

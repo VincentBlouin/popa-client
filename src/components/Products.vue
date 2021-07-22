@@ -1,159 +1,158 @@
 <template>
   <panel :title="$t('products:title')">
-    <v-card>
+    <v-card flat>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn icon color="primary" dark @click="addProduct()" large>
+        <v-btn fab color="primary" dark @click="addProduct()" absolute right>
           <v-icon>add</v-icon>
         </v-btn>
       </v-card-actions>
-      <v-card-title>
-        <v-text-field
-          append-icon="search"
-          :label="$t('search')"
-          single-line
-          hide-details
-          v-model="search"
-        ></v-text-field>
-      </v-card-title>
       <v-data-table
-        :headers="headers"
-        :items="products"
-        :search="search"
-        hide-actions
-        disable-initial-sort
-        class="elevation-1"
-        :pagination.sync="pagination"
+          :headers="headers"
+          :items="products"
+          :search="search"
+          hide-default-footer
+          class="elevation-1"
+          disable-pagination
+          :options="tableOptions"
       >
-        <template slot="items" slot-scope="props">
-          <td>
-            <span v-if="props.item.isAvailable">
-              {{$t('products:available')}}
-            </span>
-            <span v-if="!props.item.isAvailable">
-              {{$t('products:notAvailable')}}
-            </span>
-          </td>
-          <td>{{ props.item.name}}</td>
-          <td>{{ props.item.format}}</td>
-          <td>
-            {{ props.item.unitPrice | currency}}
-          </td>
-          <td>
-            {{ props.item.nbInStock}}
-          </td>
-          <td>{{ props.item.createdAt | dayDate}}</td>
-          <td>
-            <v-btn icon class="mx-0" @click="editProduct(props.item)">
-              <v-icon color="secondary">edit</v-icon>
-            </v-btn>
-          </td>
+        <template v-slot:top>
+          <v-text-field
+              prepend-inner-icon="search"
+              :label="$t('search')"
+              single-line
+              hide-details
+              v-model="search"
+              class="mx-4"
+          ></v-text-field>
         </template>
-
-        <v-alert slot="no-results" :value="true" color="error" icon="warning">
-          {{ $t('products:noResults1') }} "{{ search }}" {{ $t('products:noResults2') }}.
-        </v-alert>
+        <template v-slot:item.isAvailable="{ item }">
+          <span v-if="item.isAvailable">
+              {{ $t('products:available') }}
+            </span>
+          <span v-if="!item.isAvailable">
+              {{ $t('products:notAvailable') }}
+            </span>
+        </template>
+        <template v-slot:item.unitPrice="{ item }">
+          {{ item.unitPrice | currency }}
+        </template>
+        <template v-slot:item.createdAt="{ item }">
+          {{ item.createdAt | dayDate }}
+        </template>
+        <template v-slot:item.edit="{ item }">
+          <v-btn icon class="mx-0" @click="editProduct(item)">
+            <v-icon color="secondary">edit</v-icon>
+          </v-btn>
+        </template>
+        <v-layout slot="no-results">
+          <v-flex xs3></v-flex>
+          <v-flex xs6 class="text-h6">
+            {{ $t('products:noResults1') }} "{{ search }}" {{ $t('products:noResults2') }}.
+          </v-flex>
+          <v-flex xs3></v-flex>
+        </v-layout>
       </v-data-table>
     </v-card>
   </panel>
 </template>
 
 <script>
-  import Vue from 'vue'
-  import i18n from '@/i18n'
-  import ProductService from '@/service/ProductService'
+import i18n from '@/i18n'
+import ProductService from '@/service/ProductService'
 
-  export default {
-    name: 'Products',
-    data () {
-      i18n.i18next.addResources('en', 'products', {
-        title: 'Products',
-        name: 'Name',
-        format: 'Format',
-        unitPrice: 'Unit price',
-        nbInStock: 'Nb in stock',
-        date: 'Creation day',
-        availability: 'Availability',
-        available: 'Available',
-        notAvailable: 'Not available',
-        noResults1: 'Your search for',
-        noResults2: 'found no results'
-      })
-      i18n.i18next.addResources('fr', 'products', {
-        title: 'Produits',
-        name: 'Nom',
-        format: 'Format',
-        unitPrice: 'Prix unitaire',
-        nbInStock: 'Nb en stock',
-        date: 'Jour de création',
-        availability: 'Disponibilité',
-        available: 'Disponible',
-        notAvailable: 'Non disponible',
-        noResults1: 'Votre recherche pour',
-        noResults2: 'n\'a retourné aucun résultat'
-      })
-      return {
-        pagination: {
-          sortBy: 'createdAt',
-          descending: true,
-          rowsPerPage: -1
-        },
-        headers: [
-          {
-            text: Vue.t('products:availability'),
-            value: 'isAvailable'
-          },
-          {
-            text: Vue.t('products:name'),
-            value: 'name'
-          },
-          {
-            text: Vue.t('products:format'),
-            value: 'format'
-          },
-          {
-            text: Vue.t('products:unitPrice'),
-            value: 'unitPrice'
-          },
-          {
-            text: Vue.t('products:nbInStock'),
-            value: 'nbInStock'
-          },
-          {
-            text: Vue.t('products:date'),
-            value: 'createdAt'
-          },
-          {
-            text: '',
-            sortable: false
-          }
-        ],
-        products: [],
-        search: ''
-      }
-    },
-    methods: {
-      addProduct: function () {
-        this.$router.push({
-          name: 'Product'
-        })
+export default {
+  name: 'Products',
+  data() {
+    i18n.i18next.addResources('en', 'products', {
+      title: 'Products',
+      name: 'Name',
+      format: 'Format',
+      unitPrice: 'Unit price',
+      nbInStock: 'Nb in stock',
+      date: 'Creation day',
+      availability: 'Availability',
+      available: 'Available',
+      notAvailable: 'Not available',
+      noResults1: 'Your search for',
+      noResults2: 'found no results'
+    })
+    i18n.i18next.addResources('fr', 'products', {
+      title: 'Produits',
+      name: 'Nom',
+      format: 'Format',
+      unitPrice: 'Prix unitaire',
+      nbInStock: 'Nb en stock',
+      date: 'Jour de création',
+      availability: 'Disponibilité',
+      available: 'Disponible',
+      notAvailable: 'Non disponible',
+      noResults1: 'Votre recherche pour',
+      noResults2: 'n\'a retourné aucun résultat'
+    })
+    return {
+      tableOptions: {
+        sortBy: ['createdAt'],
+        descending: true,
+        rowsPerPage: -1
       },
-      editProduct: function (product) {
-        this.$router.push({
-          path: '/product/' + product.id
-        })
-      }
-    },
-    mounted: function () {
-      ProductService.listAll().then(function (products) {
-        this.products = products.data.map(function (product) {
-          product.name = i18n.getText(product.name)
-          product.format = i18n.getText(product.format)
-          return product
-        })
-      }.bind(this))
+      headers: [
+        {
+          text: this.$t('products:availability'),
+          value: 'isAvailable'
+        },
+        {
+          text: this.$t('products:name'),
+          value: 'name'
+        },
+        {
+          text: this.$t('products:format'),
+          value: 'format'
+        },
+        {
+          text: this.$t('products:unitPrice'),
+          value: 'unitPrice'
+        },
+        {
+          text: this.$t('products:nbInStock'),
+          value: 'nbInStock'
+        },
+        {
+          text: this.$t('products:date'),
+          value: 'createdAt'
+        },
+        {
+          text: '',
+          sortable: false,
+          value: 'edit'
+        }
+      ],
+      products: [],
+      search: ''
     }
+  },
+  methods: {
+    addProduct: function () {
+      this.$router.push({
+        name: 'Product'
+      })
+    },
+    editProduct: function (product) {
+      this.$router.push({
+        path: '/product/' + product.id
+      })
+    }
+  },
+  mounted: function () {
+    ProductService.listAll().then(function (products) {
+      this.products = products.data.map(function (product) {
+        product.name = i18n.getText(product.name)
+        product.format = i18n.getText(product.format)
+        return product
+      })
+    }.bind(this))
   }
+}
 </script>
 
 <style scoped>

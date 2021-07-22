@@ -60,7 +60,7 @@
         return AuthenticationService.resetPassword({
           email: this.email,
           locale: this.$store.state.locale
-        }).then(function (response) {
+        }).then(function () {
           this.emailSent = true
         }.bind(this)).catch(function (error) {
           this.error = error.response.data.error

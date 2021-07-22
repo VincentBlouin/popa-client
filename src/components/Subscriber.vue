@@ -1,6 +1,6 @@
 <template>
   <panel :title="title">
-    <v-card raised class="mt-4 mb-4">
+    <v-card raised class="mt-6 mb-6">
       <v-card-text>
         <v-form name="subscriberForm" ref="subscriberForm">
           <v-checkbox
@@ -49,7 +49,7 @@
       </v-card-actions>
     </v-card>
     <v-divider></v-divider>
-    <v-card v-if="!isCreate" raised class="mt-4 mb-4">
+    <v-card v-if="!isCreate" raised class="mt-6 mb-6">
       <v-card-title>
         {{$t('subscriber:addFund')}}
       </v-card-title>
@@ -68,7 +68,7 @@
       </v-card-actions>
     </v-card>
     <v-divider></v-divider>
-    <v-card v-if="!isCreate" raised class="mt-4 mb-4">
+    <v-card v-if="!isCreate" raised class="mt-6 mb-6">
       <v-card-title>
         {{$t('subscriber:addPenalty')}}
       </v-card-title>

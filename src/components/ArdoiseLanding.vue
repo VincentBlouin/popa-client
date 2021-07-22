@@ -46,26 +46,26 @@
                     {{$t('landing:buyOnce')}}
                   </v-btn>
                 </p>
-                <p class="subheading pb-0 mb-0">
+                <p class="subtitle-1 pb-0 mb-0">
                   {{$t('landing:toSubscribe')}}
                 </p>
                 <v-list>
-                  <v-list-tile inactive>
-                    <v-list-tile-action>
+                  <v-list-item inactive>
+                    <v-list-item-action>
                       <v-icon color="secondary">email</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
+                    </v-list-item-action>
+                    <v-list-item-content>
                       potagerspartages@gmail.com
-                    </v-list-tile-content>
-                  </v-list-tile>
-                  <v-list-tile href="tel:+5812337672">
-                    <v-list-tile-action>
+                    </v-list-item-content>
+                  </v-list-item>
+                  <v-list-item href="tel:+5812337672">
+                    <v-list-item-action>
                       <v-icon color="secondary">phone</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
+                    </v-list-item-action>
+                    <v-list-item-content>
                       581-233-7672
-                    </v-list-tile-content>
-                  </v-list-tile>
+                    </v-list-item-content>
+                  </v-list-item>
                 </v-list>
               </v-card-text>
               <v-card-actions>

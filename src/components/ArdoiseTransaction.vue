@@ -7,7 +7,7 @@
       max-width="600px"
     >
       <v-card>
-        <v-card-title class="headline text-xs-center">
+        <v-card-title class="headline text-center">
           {{$t('aTransaction:inactivity')}}
         </v-card-title>
         <v-card-text>
