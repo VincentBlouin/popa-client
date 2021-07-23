@@ -19,7 +19,7 @@
       <template v-slot:item.deposit="{ item }">
         {{ item.deposit | currency }}
       </template>
-      <template v-slot:item.deposit="{ item }">
+      <template v-slot:item.withdrawal="{ item }">
         {{ item.withdrawal | currency }}
       </template>
       <template v-slot:item.balance="{ item }">
