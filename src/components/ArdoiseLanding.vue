@@ -22,6 +22,7 @@
                     :rules="[rules.required]"
                     v-model="ardoiseIdentifier"
                     ref="ardoiseIdentifierTextField"
+                    @keyup.enter.native="ardoiseLogin"
                   ></v-text-field>
                   <v-btn
                     @click="ardoiseLogin" color="secondary">
