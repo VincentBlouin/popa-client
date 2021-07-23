@@ -27,12 +27,17 @@
           ></v-text-field>
         </template>
         <template v-slot:item.isAvailable="{ item }">
-          <span v-if="item.isAvailable">
-              {{ $t('products:available') }}
-            </span>
-          <span v-if="!item.isAvailable">
-              {{ $t('products:notAvailable') }}
-            </span>
+          <v-checkbox
+              v-model="item.isAvailable"
+              @change="updateAvailability(item)"
+              class="ml-4"
+          ></v-checkbox>
+          <!--          <span v-if="item.isAvailable">-->
+          <!--              {{ $t('products:available') }}-->
+          <!--            </span>-->
+          <!--          <span v-if="!item.isAvailable">-->
+          <!--              {{ $t('products:notAvailable') }}-->
+          <!--            </span>-->
         </template>
         <template v-slot:item.unitPrice="{ item }">
           {{ item.unitPrice | currency }}
@@ -54,6 +59,34 @@
         </v-layout>
       </v-data-table>
     </v-card>
+    <v-snackbar v-model="availabilitySnackback" color="primary">
+      <span class="body-1">
+        {{ $t('products:availabilityUpdated') }}
+      </span>
+      <template v-slot:action="{ attrs }">
+        <v-btn
+            text
+            v-bind="attrs"
+            @click="availabilitySnackback = false"
+        >
+          {{ $t('close') }}
+        </v-btn>
+      </template>
+    </v-snackbar>
+    <v-snackbar v-model="priceSnackback" color="primary">
+      <span class="body-1">
+        {{ $t('products:priceUpdated') }}
+      </span>
+      <template v-slot:action="{ attrs }">
+        <v-btn
+            text
+            v-bind="attrs"
+            @click="priceSnackback = false"
+        >
+          {{ $t('close') }}
+        </v-btn>
+      </template>
+    </v-snackbar>
   </panel>
 </template>
 
@@ -75,7 +108,9 @@ export default {
       available: 'Available',
       notAvailable: 'Not available',
       noResults1: 'Your search for',
-      noResults2: 'found no results'
+      noResults2: 'found no results',
+      availabilityUpdated: "The availability has been updated",
+      priceUpdated: "Price is updated"
     })
     i18n.i18next.addResources('fr', 'products', {
       title: 'Produits',
@@ -88,9 +123,13 @@ export default {
       available: 'Disponible',
       notAvailable: 'Non disponible',
       noResults1: 'Votre recherche pour',
-      noResults2: 'n\'a retourné aucun résultat'
+      noResults2: 'n\'a retourné aucun résultat',
+      availabilityUpdated: "La disponibilité a été mis à jour",
+      priceUpdated: "Le prix a été mis à jour"
     })
     return {
+      availabilitySnackback: false,
+      priceSnackback: false,
       tableOptions: {
         sortBy: ['createdAt'],
         descending: true,
@@ -132,6 +171,27 @@ export default {
     }
   },
   methods: {
+    updateAvailability: async function (product) {
+      const timeout = this.availabilitySnackback ? 500 : 0;
+      this.availabilitySnackback = false;
+      await ProductService.updateAvailability(
+          product
+      );
+      setTimeout(() => {
+        this.availabilitySnackback = true;
+      }, timeout)
+
+    },
+    updatePrice: async function (product) {
+      const timeout = this.priceSnackback ? 500 : 0;
+      this.priceSnackback = false;
+      await ProductService.updatePrice(
+          product
+      );
+      setTimeout(() => {
+        this.priceSnackback = true;
+      }, timeout)
+    },
     addProduct: function () {
       this.$router.push({
         name: 'Product'
