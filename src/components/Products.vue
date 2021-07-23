@@ -40,7 +40,19 @@
           <!--            </span>-->
         </template>
         <template v-slot:item.unitPrice="{ item }">
-          {{ item.unitPrice | currency }}
+          <div style="max-width: 100px;" class="mt-6">
+            <v-text-field
+                v-model="item.unitPrice"
+                min="0"
+                prefix="$"
+                outlined
+                type="number"
+                @change="updatePrice(item)"
+                x-small
+                dense
+                width="100"
+            />
+          </div>
         </template>
         <template v-slot:item.createdAt="{ item }">
           {{ item.createdAt | dayDate }}
