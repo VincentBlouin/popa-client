@@ -5,6 +5,14 @@
         <span class="font-weight-black mr-1">{{ quantityForFilteredTransactionItems }}</span>:
         {{ $t('transactions:quantitySum') }}
       </v-card-title>
+      <v-card-title>
+        <v-select
+            :items="years"
+            v-model="yearFilter"
+            :label="$t('transactions:year')"
+            @change="updateListWithYearFilter"
+        ></v-select>
+      </v-card-title>
       <v-data-table
           :headers="headers"
           :items="transactionItemsFiltered"
@@ -66,7 +74,8 @@ export default {
       date: 'Date',
       notAvailable: 'Not available',
       noResults1: 'Your search for',
-      noResults2: 'found no results'
+      noResults2: 'found no results',
+      year: "Year"
     })
     i18n.i18next.addResources('fr', 'transactions', {
       title: 'Items de transactions',
@@ -80,14 +89,23 @@ export default {
       totalPrice: 'Prix total',
       date: 'Date',
       noResults1: 'Votre recherche pour',
-      noResults2: 'n\'a retourné aucun résultat'
+      noResults2: 'n\'a retourné aucun résultat',
+      year: "Année"
     })
+    const currentYear = new Date().getFullYear();
+    const firstYear = currentYear - 20;
+    const years = [];
+    for (let i = currentYear; i > firstYear; i--) {
+      years.push(i);
+    }
     return {
       tableOptions: {
         sortBy: ['TransactionId'],
         descending: true,
         itemsPerPage: 100
       },
+      years: years,
+      yearFilter: currentYear,
       headers: [
         {
           text: this.$t('transactions:billNumber'),
@@ -126,17 +144,21 @@ export default {
       search: ''
     }
   },
-  methods: {},
   mounted: function () {
-    TransactionService.listAllDetails().then(function (transactionItems) {
-      this.transactionItems = transactionItems.data.map(function (item) {
-        item.name = i18n.getText(item.Product.name)
-        item.format = i18n.getText(item.Product.format)
-        item.rebate = item.totalPriceAfterRebate - item.totalPrice
-        item.date = DateUtil.getDayDate(item.updatedAt)
-        return item
-      })
-    }.bind(this))
+    this.updateListWithYearFilter();
+  },
+  methods: {
+    updateListWithYearFilter: function () {
+      TransactionService.listAllDetails(this.yearFilter).then(function (transactionItems) {
+        this.transactionItems = transactionItems.data.map(function (item) {
+          item.name = i18n.getText(item.Product.name)
+          item.format = i18n.getText(item.Product.format)
+          item.rebate = item.totalPriceAfterRebate - item.totalPrice
+          item.date = DateUtil.getDayDate(item.updatedAt)
+          return item
+        })
+      }.bind(this))
+    }
   },
   computed: {
     transactionItemsFiltered: function () {
