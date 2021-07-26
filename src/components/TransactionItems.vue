@@ -141,8 +141,14 @@ export default {
   computed: {
     transactionItemsFiltered: function () {
       return this.transactionItems.filter((transactionItem) => {
-        return transactionItem.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
-            transactionItem.date.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
+        const values = [
+          transactionItem.name,
+          transactionItem.format,
+          transactionItem.date
+        ]
+        return values.some((value) => {
+          return value !== null && value.toLowerCase().indexOf(this.search) > -1
+        });
       });
     },
     quantityForFilteredTransactionItems: function () {
