@@ -3,10 +3,10 @@
     <v-card raised class="mt-6 mb-6">
       <v-card-text>
         <v-form name="subscriberForm" ref="subscriberForm">
-          <v-checkbox
-            :label="$t('subscriber:hasRebate')"
-            v-model="subscriber.hasRebate"
-          />
+<!--          <v-checkbox-->
+<!--            :label="$t('subscriber:hasRebate')"-->
+<!--            v-model="subscriber.hasRebate"-->
+<!--          />-->
           <v-text-field
             :label="$t('subscriber:email')"
             v-model="subscriber.email"
