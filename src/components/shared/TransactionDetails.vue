@@ -225,9 +225,9 @@ export default {
       if (this.areTransactionsCommited) {
         return product.totalPrice - product.totalPriceAfterRebate
       }
-      if (this.isArdoiseUser && this.ardoiseUser.hasRebate) {
-        return (product.quantity * product.unitPrice) * 0.1
-      }
+      // if (this.isArdoiseUser && this.ardoiseUser.hasRebate) {
+      //   return (product.quantity * product.unitPrice) * 0.1
+      // }
       return 0
     },
     redirectToLanding: function () {
