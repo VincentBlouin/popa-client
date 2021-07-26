@@ -11,8 +11,51 @@
             v-model="yearFilter"
             :label="$t('transactions:year')"
             @change="updateListWithYearFilter"
+            class="mx-4"
         ></v-select>
       </v-card-title>
+      <v-dialog
+          ref="dialog"
+          v-model="dayModal"
+          :return-value.sync="dayFilter"
+          persistent
+          width="290px"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field
+              :label="$t('transactions:day')"
+              prepend-icon="calendar_today"
+              readonly
+              v-bind="attrs"
+              v-on="on"
+              class="mx-4"
+              clearable
+              @click:clear="dayFilter = null"
+              :value="dayFilterFormatted"
+          ></v-text-field>
+        </template>
+        <v-date-picker
+            v-model="dayFilter"
+            scrollable
+            :locale="$store.state.locale"
+        >
+          <v-spacer></v-spacer>
+          <v-btn
+              text
+              color="primary"
+              @click="dayModal = false"
+          >
+            {{ $t('cancel') }}
+          </v-btn>
+          <v-btn
+              text
+              color="primary"
+              @click="$refs.dialog.save(dayFilter)"
+          >
+            OK
+          </v-btn>
+        </v-date-picker>
+      </v-dialog>
       <v-data-table
           :headers="headers"
           :items="transactionItemsFiltered"
@@ -57,6 +100,7 @@
 import i18n from '@/i18n'
 import DateUtil from '@/dateUtil'
 import TransactionService from '@/service/TransactionService'
+import dateUtil from "@/dateUtil";
 
 export default {
   name: 'Products',
@@ -75,7 +119,8 @@ export default {
       notAvailable: 'Not available',
       noResults1: 'Your search for',
       noResults2: 'found no results',
-      year: "Year"
+      year: "Year",
+      day: "Day"
     })
     i18n.i18next.addResources('fr', 'transactions', {
       title: 'Items de transactions',
@@ -90,7 +135,8 @@ export default {
       date: 'Date',
       noResults1: 'Votre recherche pour',
       noResults2: 'n\'a retourné aucun résultat',
-      year: "Année"
+      year: "Année",
+      day: "Jour"
     })
     const currentYear = new Date().getFullYear();
     const firstYear = currentYear - 20;
@@ -99,6 +145,8 @@ export default {
       years.push(i);
     }
     return {
+      dayFilter: null,
+      dayModal: false,
       tableOptions: {
         sortBy: ['TransactionId'],
         descending: true,
@@ -161,15 +209,21 @@ export default {
     }
   },
   computed: {
+    dayFilterFormatted: function () {
+      return DateUtil.getDayDate(this.dayFilter);
+    },
     transactionItemsFiltered: function () {
       return this.transactionItems.filter((transactionItem) => {
+        if (this.dayFilter !== null && !dateUtil.areDatesSameDay(new Date(transactionItem.updatedAt), new Date(this.dayFilter))) {
+          return false;
+        }
         const values = [
           transactionItem.name,
           transactionItem.format,
           transactionItem.date
         ]
         return values.some((value) => {
-          return value !== null && value.toLowerCase().indexOf(this.search) > -1
+          return value !== null && value.toLowerCase().indexOf(this.search.toLowerCase().trim()) > -1
         });
       });
     },
