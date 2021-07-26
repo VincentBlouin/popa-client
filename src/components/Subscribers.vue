@@ -68,7 +68,8 @@ export default {
       status: 'Status',
       date: 'Creation day',
       balance: 'Balance',
-      lastTransaction: 'Last transaction'
+      lastTransaction: 'Last transaction',
+      ardoiseCode: "Ardoise code"
     })
     i18n.i18next.addResources('fr', 'subscribers', {
       title: 'Abonnés',
@@ -79,7 +80,8 @@ export default {
       status: 'Statut',
       date: 'Jour de création',
       balance: 'Solde',
-      lastTransaction: 'Dernière Transaction'
+      lastTransaction: 'Dernière Transaction',
+      ardoiseCode: "Code d'ardoise"
     })
     return {
       tableOptions: {
@@ -102,6 +104,10 @@ export default {
         {
           text: this.$t('subscribers:balance'),
           value: 'balance'
+        },
+        {
+          text: this.$t('subscribers:ardoiseCode'),
+          value: 'ardoiseIdentifier'
         },
         {
           text: this.$t('subscribers:date'),

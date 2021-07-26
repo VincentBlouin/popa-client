@@ -11,6 +11,10 @@
           :rules="[rules.required, rules.email]"
           v-model="email"
       ></v-text-field>
+<!--      <small>-->
+<!--        <a class="mr-6">kiosque</a>-->
+<!--        <a>administration</a>-->
+<!--      </small>-->
       <br>
       <v-text-field
           name="password"
