@@ -30,6 +30,9 @@
         <template v-slot:item.totalPriceAfterRebate="{ item }">
           {{ item.totalPriceAfterRebate | currency }}
         </template>
+        <template v-slot:item.updatedAt="{ item }">
+          {{ item.date }}
+        </template>
         <v-layout slot="no-results">
           <v-flex xs3></v-flex>
           <v-flex xs6 class="text-h6">
@@ -116,7 +119,7 @@ export default {
         },
         {
           text: this.$t('transactions:date'),
-          value: 'date'
+          value: 'updatedAt'
         }
       ],
       transactionItems: [],
@@ -138,7 +141,8 @@ export default {
   computed: {
     transactionItemsFiltered: function () {
       return this.transactionItems.filter((transactionItem) => {
-        return transactionItem.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
+        return transactionItem.name.toLowerCase().indexOf(this.search.toLowerCase()) > -1 ||
+            transactionItem.date.toLowerCase().indexOf(this.search.toLowerCase()) > -1;
       });
     },
     quantityForFilteredTransactionItems: function () {
