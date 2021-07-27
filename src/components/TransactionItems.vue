@@ -23,6 +23,7 @@
           {{ moneyAmountForFilteredTransactionItems | currency }}
         </strong>
       </v-card-text>
+      <v-divider class="mb-4"></v-divider>
       <v-card-title class="pt-0">
         <v-select
             :items="years"
