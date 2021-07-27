@@ -172,7 +172,7 @@ export default {
       dayModal: false,
       tableOptions: {
         sortBy: ['updatedAt'],
-        descending: false,
+        sortDesc: [true],
         itemsPerPage: 100
       },
       years: years,

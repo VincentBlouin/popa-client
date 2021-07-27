@@ -86,7 +86,7 @@ export default {
     return {
       tableOptions: {
         sortBy: ['createdAt'],
-        descending: true
+        sortDesc: [true]
       },
       headers: [
         {

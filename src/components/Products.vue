@@ -144,7 +144,7 @@ export default {
       priceSnackback: false,
       tableOptions: {
         sortBy: ['createdAt'],
-        descending: true,
+        sortDesc: [true],
         rowsPerPage: -1
       },
       headers: [

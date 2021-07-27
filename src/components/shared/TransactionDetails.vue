@@ -164,7 +164,7 @@ export default {
       confirmRemove: false,
       tableOptions: {
         sortBy: ['nbInStock'],
-        descending: true
+        sortDesc: [true]
       },
       headers: [
         {
