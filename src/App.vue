@@ -86,7 +86,7 @@
           v-model="drawer"
           light
           app
-          absolute
+          fixed
       >
         <v-list>
           <v-list-item

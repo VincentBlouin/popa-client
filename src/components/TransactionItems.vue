@@ -84,6 +84,10 @@
         <template v-slot:item.updatedAt="{ item }">
           {{ item.date }}
         </template>
+        <template v-slot:item.withOrWithoutAccount="{ item }">
+          <v-icon v-if="item.Transaction.UserId" class="ml-3">account_box</v-icon>
+          <v-icon v-else class="ml-3">no_accounts</v-icon>
+        </template>
         <v-layout slot="no-results">
           <v-flex xs3></v-flex>
           <v-flex xs6 class="text-h6">
@@ -120,7 +124,8 @@ export default {
       noResults1: 'Your search for',
       noResults2: 'found no results',
       year: "Year",
-      day: "Day"
+      day: "Day",
+      withOrWithoutAccount: "Account"
     })
     i18n.i18next.addResources('fr', 'transactions', {
       title: 'Items de transactions',
@@ -136,7 +141,8 @@ export default {
       noResults1: 'Votre recherche pour',
       noResults2: 'n\'a retourné aucun résultat',
       year: "Année",
-      day: "Jour"
+      day: "Jour",
+      withOrWithoutAccount: "Compte"
     })
     const currentYear = new Date().getFullYear();
     const firstYear = currentYear - 20;
@@ -182,6 +188,10 @@ export default {
         {
           text: this.$t('transactions:totalPrice'),
           value: 'totalPriceAfterRebate'
+        },
+        {
+          text: this.$t('transactions:withOrWithoutAccount'),
+          value: 'withOrWithoutAccount'
         },
         {
           text: this.$t('transactions:date'),
