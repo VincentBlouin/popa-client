@@ -171,7 +171,7 @@ export default {
       dayFilter: null,
       dayModal: false,
       tableOptions: {
-        sortBy: ['TransactionId'],
+        sortBy: ['updatedAt'],
         descending: true,
         itemsPerPage: 100
       },

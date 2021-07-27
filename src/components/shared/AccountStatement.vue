@@ -87,7 +87,7 @@ export default {
     })
     return {
       tableOptions: {
-        sortBy: ['id'],
+        sortBy: ['updatedAt'],
         descending: true
       },
       headers: [
