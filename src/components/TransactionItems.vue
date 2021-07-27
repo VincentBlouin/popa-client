@@ -1,12 +1,28 @@
 <template>
   <panel :title="$t('transactions:title')">
     <v-card flat>
-      <v-card-title class="text-center vh-center">
-        {{transactionItemsFiltered.length}}
+      <v-card-text class="black--text body-1">
         {{ $t('transactions:quantitySum') }}
-        {{ quantityForFilteredTransactionItems }}
+        <strong class="ml-1">
+          {{ transactionItemsFiltered.length }}
+        </strong>
+        <v-divider
+            vertical
+            class="mx-4 black--text"
+        ></v-divider>
         {{ $t('transactions:quantitySum2') }}
-      </v-card-title>
+        <strong class="ml-1">
+          {{ quantityForFilteredTransactionItems }}
+        </strong>
+        <v-divider
+            vertical
+            class="mx-4 black--text"
+        ></v-divider>
+        {{ $t('transactions:quantitySum3') }}
+        <strong class="ml-1">
+          {{ moneyAmountForFilteredTransactionItems | currency }}
+        </strong>
+      </v-card-text>
       <v-card-title class="pt-0">
         <v-select
             :items="years"
@@ -128,7 +144,7 @@ export default {
     i18n.i18next.addResources('en', 'transactions', {
       title: 'Transaction items',
       quantitySum: 'rows, totaling',
-      quantitySum2: 'items',
+      quantitySum2: 'quantities',
       name: 'Name',
       billNumber: 'Bill #',
       format: 'Format',
@@ -146,8 +162,9 @@ export default {
     })
     i18n.i18next.addResources('fr', 'transactions', {
       title: 'Items de transactions',
-      quantitySum: 'rangées, totalisant',
-      quantitySum2: 'items',
+      quantitySum: 'rangées',
+      quantitySum2: 'quantité',
+      quantitySum3: 'montant',
       billNumber: '# Facture',
       name: 'Nom',
       format: 'Format',
@@ -283,6 +300,11 @@ export default {
     quantityForFilteredTransactionItems: function () {
       return this.transactionItemsFiltered.reduce(function (sum, item) {
         return sum + item.quantity;
+      }, 0)
+    },
+    moneyAmountForFilteredTransactionItems: function () {
+      return this.transactionItemsFiltered.reduce(function (sum, item) {
+        return sum + item.totalPriceAfterRebate;
       }, 0)
     }
   }
