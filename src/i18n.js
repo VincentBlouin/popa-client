@@ -54,7 +54,8 @@ const i18n = {
                         details: 'détails',
                         invalidEmail: 'courriel invalide',
                         cancel: 'Annuler',
-                        finish: 'Terminer'
+                        finish: 'Terminer',
+                        confirm:"Confirmer"
                     }
                 },
                 en: {
@@ -74,7 +75,8 @@ const i18n = {
                         details: 'details',
                         invalidEmail: 'invalid email',
                         cancel: 'Cancel',
-                        finish: 'Finish'
+                        finish: 'Finish',
+                        confirm:"Confirm"
                     }
                 }
             }

@@ -221,7 +221,7 @@
       if (!this.subscriber.id) {
         return
       }
-      UserService.getDetails(this.subscriber).then(function (subscriber) {
+      UserService.getDetails(this.subscriber.id).then(function (subscriber) {
         this.subscriber = subscriber.data
       }.bind(this))
     }

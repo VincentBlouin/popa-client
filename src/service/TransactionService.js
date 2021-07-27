@@ -7,8 +7,8 @@ export default {
     listAllDetails: function (yearFilter) {
         return Service.api().get('/transactions/details/' + yearFilter)
     },
-    removeTransactionItem: function (transactionItemId) {
-        return Service.api().delete('/transaction-item/' + transactionItemId)
+    removeTransaction: function (transactionId) {
+        return Service.api().delete('/transaction/' + transactionId)
     },
     getDetails: function (user, transaction) {
         return Service.api().get(user.id + '/transaction/' + transaction.id)

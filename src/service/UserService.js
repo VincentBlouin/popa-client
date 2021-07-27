@@ -4,8 +4,8 @@ export default {
   clients: function () {
     return Service.api().get('/clients')
   },
-  getDetails: function (user) {
-    return Service.api().get('/clients/' + user.id)
+  getDetails: function (userId) {
+    return Service.api().get('/clients/' + userId)
   },
   updateClient: function (client) {
     return Service.api().put('/clients', client)

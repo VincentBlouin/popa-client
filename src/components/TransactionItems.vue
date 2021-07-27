@@ -72,6 +72,11 @@
               class="mx-4"
           ></v-text-field>
         </template>
+        <template v-slot:item.TransactionId="{ item }">
+          <a @click.prevent="enterBillDetails(item)" href="">
+            {{ item.TransactionId }}
+          </a>
+        </template>
         <template v-slot:item.unitPrice="{ item }">
           {{ item.unitPrice | currency }}
         </template>
@@ -97,6 +102,11 @@
         </v-layout>
       </v-data-table>
     </v-card>
+    <TransactionDetailsDialog
+        ref="transactionDetailsDialog"
+        :details="detailsForDialog"
+        :billNumber="billNumber"
+        :ardoiseUser="transactionUser" @removeTransaction="removeTransaction"></TransactionDetailsDialog>
   </panel>
 </template>
 
@@ -105,9 +115,13 @@ import i18n from '@/i18n'
 import DateUtil from '@/dateUtil'
 import TransactionService from '@/service/TransactionService'
 import dateUtil from "@/dateUtil";
+import UserService from "@/service/UserService";
 
 export default {
-  name: 'Products',
+  name: 'TransactionItems',
+  components: {
+    TransactionDetailsDialog: () => import('@/components/shared/TransactionDetailsDialog')
+  },
   data() {
     i18n.i18next.addResources('en', 'transactions', {
       title: 'Transaction items',
@@ -151,6 +165,9 @@ export default {
       years.push(i);
     }
     return {
+      detailsForDialog: [],
+      billNumber: null,
+      transactionUser: null,
       dayFilter: null,
       dayModal: false,
       tableOptions: {
@@ -206,6 +223,28 @@ export default {
     this.updateListWithYearFilter();
   },
   methods: {
+    removeTransaction: function (transactionId) {
+      let l = this.transactionItems.length;
+      while (l--) {
+        const transactionItem = this.transactionItems[l];
+        if (transactionItem.TransactionId === transactionId) {
+          this.transactionItems.splice(l, 1);
+        }
+      }
+    },
+    enterBillDetails: async function (transactionItemOfBill) {
+      this.billNumber = transactionItemOfBill.TransactionId;
+      this.detailsForDialog = this.transactionItems.filter((transactionItem) => {
+        return transactionItem.TransactionId === transactionItemOfBill.TransactionId;
+      });
+      if (transactionItemOfBill.Transaction.UserId) {
+        const response = await UserService.getDetails(transactionItemOfBill.Transaction.UserId);
+        this.transactionUser = response.data;
+      } else {
+        this.transactionUser = null;
+      }
+      this.$refs.transactionDetailsDialog.enter();
+    },
     updateListWithYearFilter: function () {
       TransactionService.listAllDetails(this.yearFilter).then(function (transactionItems) {
         this.transactionItems = transactionItems.data.map(function (item) {

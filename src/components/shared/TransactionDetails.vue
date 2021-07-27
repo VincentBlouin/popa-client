@@ -1,6 +1,13 @@
 <template>
   <div>
-    <v-simple-table v-if="transactionItemsTotal > 0" class="mt-2 mb-4">
+    <v-card flat class="mb-2">
+      <v-card-text>
+        <strong v-if="areTransactionsCommited && products">
+          {{ products[0].createdAt | date }}
+        </strong>
+      </v-card-text>
+    </v-card>
+    <v-simple-table v-if="transactionItemsTotal > 0" class="mb-4">
       <template v-slot:default>
         <thead>
         <th v-for="header in headers" :key="header.value" class="text-left pl-4 s">
@@ -33,27 +40,52 @@
           </td>
           <td class="text-left">{{ (item.unitPrice * item.quantity - calculateRebate(item)) | currency }}</td>
         </tr>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            <strong v-if="transactionItems.length > 0" class="subtitle-1 font-weight-bold">
+              {{ transactionItemsTotal | currency }}
+              <span class="text-capitalize">
+                {{ $t('aTransaction:total') }}
+            </span>
+            </strong>
+          </td>
+        </tr>
         </tbody>
+        <tfoot>
+        </tfoot>
       </template>
     </v-simple-table>
     <span class="grey--text body-1 ml-8" v-if="transactionItemsTotal === 0">
       {{ $t('transaction:noItem') }}
     </span>
-    <v-card flat class="pt-0">
-      <v-card-text>
-        <small v-if="areTransactionsCommited && products">
-          <strong>
-            {{ products[0].createdAt | date }}
-          </strong>
-        </small>
-        <strong v-if="transactionItems.length > 0" class="subtitle-1 font-weight-bold">
-          <span class="text-capitalize">
-          {{ $t('aTransaction:total') }}
-            </span>
-          {{ transactionItemsTotal | currency }}
-        </strong>
-      </v-card-text>
-    </v-card>
+    <v-dialog v-model="confirmRemove" width="600">
+      <v-card>
+        <v-card-title>
+          {{ $t('details:confirmRemove') }}
+        </v-card-title>
+        <v-card-actions>
+          <v-btn text>
+            {{ $t('cancel') }}
+          </v-btn>
+          <v-spacer></v-spacer>
+          <v-btn text color="primary" @click="removeTransaction()" :loading="removeLoading" :disabled="removeLoading">
+            {{ $t('confirm') }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+    <v-btn color="primary" class="ml-2 left" @click="confirmRemove=true"
+           :disabled="ardoiseUser !== null"
+           v-if="areTransactionsCommited && transactionId && $store.state.user.status === 'admin'"
+    >
+      <v-icon>delete</v-icon>
+      {{ $t('details:removeTransaction') }}
+    </v-btn>
     <v-btn color="primary" class="ml-2 left" @click="completeTransaction()"
            :disabled="transactionItems.length === 0"
            v-if="!areTransactionsCommited"
@@ -112,7 +144,9 @@ export default {
       seconds: 'seconds',
       thankYou: 'Thank you !',
       thankYou1: 'Please pay the amount of',
-      completeTransaction: 'Complete transaction'
+      completeTransaction: 'Complete transaction',
+      removeTransaction: 'Remove transaction',
+      confirmRemove: "Really remove this transaction"
     })
     i18n.i18next.addResources('fr', 'details', {
       noItemsOfPurchase: 'Pas encore d\'items',
@@ -122,9 +156,12 @@ export default {
       seconds: 'secondes',
       thankYou: 'Merci !',
       thankYou1: 'Veuillez payer le montant de',
-      completeTransaction: 'Compléter la transaction'
+      completeTransaction: 'Compléter la transaction',
+      removeTransaction: 'Supprimer la transaction',
+      confirmRemove: "Vraiment supprimer cette transaction ?"
     })
     return {
+      confirmRemove: false,
       tableOptions: {
         sortBy: ['nbInStock'],
         descending: true
@@ -158,13 +195,15 @@ export default {
       balance: null,
       disconnectTimeout: null,
       timeoutInterval: null,
-      ProductService: ProductService
+      ProductService: ProductService,
+      removeLoading: false
     }
   },
   props: [
     'products',
     'ardoiseUser',
-    'areTransactionsCommited'
+    'areTransactionsCommited',
+    'transactionId'
   ],
   computed: {
     transactionItems: function () {
@@ -196,6 +235,12 @@ export default {
     clearInterval(this.timeoutInterval)
   },
   methods: {
+    removeTransaction: async function () {
+      this.removeLoading = true;
+      await TransactionService.removeTransaction(this.transactionId);
+      this.removeLoading = false;
+      this.$emit('removeTransaction');
+    },
     completeTransaction: function () {
       this.$emit('completeTransaction');
       const transaction = this.ardoiseUser ? TransactionService.addForUser(
