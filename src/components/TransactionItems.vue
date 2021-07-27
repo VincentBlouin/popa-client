@@ -1,11 +1,13 @@
 <template>
   <panel :title="$t('transactions:title')">
     <v-card flat>
-      <v-card-title>
-        <span class="font-weight-black mr-1">{{ quantityForFilteredTransactionItems }}</span>:
+      <v-card-title class="text-center vh-center">
+        {{transactionItemsFiltered.length}}
         {{ $t('transactions:quantitySum') }}
+        {{ quantityForFilteredTransactionItems }}
+        {{ $t('transactions:quantitySum2') }}
       </v-card-title>
-      <v-card-title>
+      <v-card-title class="pt-0">
         <v-select
             :items="years"
             v-model="yearFilter"
@@ -125,7 +127,8 @@ export default {
   data() {
     i18n.i18next.addResources('en', 'transactions', {
       title: 'Transaction items',
-      quantitySum: 'sum of the quantities of filtered transactions',
+      quantitySum: 'rows, totaling',
+      quantitySum2: 'items',
       name: 'Name',
       billNumber: 'Bill #',
       format: 'Format',
@@ -143,7 +146,8 @@ export default {
     })
     i18n.i18next.addResources('fr', 'transactions', {
       title: 'Items de transactions',
-      quantitySum: 'somme des quantités des transactions filtrés',
+      quantitySum: 'rangées, totalisant',
+      quantitySum2: 'items',
       billNumber: '# Facture',
       name: 'Nom',
       format: 'Format',
