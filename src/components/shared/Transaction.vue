@@ -89,7 +89,7 @@
           <v-spacer></v-spacer>
           <v-btn color="secondary" text
                  @click.native="showCompleteTransactionModal = false; showConfirmSnackbar = true">
-            {{ $t('close') }}
+            {{ $t('cancel') }}
           </v-btn>
         </v-card-actions>
       </v-card>
