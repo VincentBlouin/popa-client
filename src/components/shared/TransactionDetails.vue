@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-card flat>
     <v-card flat class="mb-2">
       <v-card-text>
         <strong v-if="areTransactionsCommited && products">
@@ -7,59 +7,59 @@
         </strong>
       </v-card-text>
     </v-card>
-    <v-simple-table v-if="transactionItemsTotal > 0" class="mb-4">
-      <template v-slot:default>
-        <thead>
-        <th v-for="header in headers" :key="header.value" class="text-left pl-4 s">
-          {{ header.text }}
-        </th>
-        </thead>
-        <tbody class="mt-4 mb-4">
-        <tr
-            v-for="item in transactionItems"
-            :key="item.id"
-        >
-          <td class="text-left">
-            <v-avatar
-                size="36px"
-                slot="activator"
-                class="mr-6"
-                v-if="item.image"
-            >
-              <img :src="ProductService.getImageUrl(item)" class="left">
-            </v-avatar>
-            {{ item.name | i18n }}
-          </td>
-          <td class="text-left">{{ item.format | i18n }}</td>
-          <td class="text-left">{{ item.unitPrice | currency }}</td>
-          <td class="text-left pl-6">
-            {{ item.quantity }}
-          </td>
-          <td class="text-left">
-            {{ calculateRebate(item) | currency }}
-          </td>
-          <td class="text-left">{{ (item.unitPrice * item.quantity - calculateRebate(item)) | currency }}</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td></td>
-          <td>
-            <strong v-if="transactionItems.length > 0" class="subtitle-1 font-weight-bold">
-              {{ transactionItemsTotal | currency }}
-              <span class="text-capitalize">
+    <v-card-text>
+      <v-simple-table v-if="transactionItemsTotal > 0" class="mb-4">
+        <template v-slot:default>
+          <thead>
+          <th v-for="header in headers" :key="header.value" class="text-left pl-4 s">
+            {{ header.text }}
+          </th>
+          </thead>
+          <tbody class="mt-4 mb-4">
+          <tr
+              v-for="item in transactionItems"
+              :key="item.id"
+          >
+            <td class="text-left">
+              <v-avatar
+                  size="36px"
+                  slot="activator"
+                  class="mr-6"
+                  v-if="item.image"
+              >
+                <img :src="ProductService.getImageUrl(item)" class="left">
+              </v-avatar>
+              {{ item.name | i18n }}
+            </td>
+            <td class="text-left">{{ item.format | i18n }}</td>
+            <td class="text-left">{{ item.unitPrice | currency }}</td>
+            <td class="text-left pl-6">
+              {{ item.quantity }}
+            </td>
+            <td class="text-left">
+              {{ calculateRebate(item) | currency }}
+            </td>
+            <td class="text-left">{{ (item.unitPrice * item.quantity - calculateRebate(item)) | currency }}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>
+              <strong v-if="transactionItems.length > 0" class="subtitle-1 font-weight-bold">
+                {{ transactionItemsTotal | currency }}
+                <span class="text-capitalize">
                 {{ $t('aTransaction:total') }}
             </span>
-            </strong>
-          </td>
-        </tr>
-        </tbody>
-        <tfoot>
-        </tfoot>
-      </template>
-    </v-simple-table>
+              </strong>
+            </td>
+          </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+    </v-card-text>
     <span class="grey--text body-1 ml-8" v-if="transactionItemsTotal === 0">
       {{ $t('transaction:noItem') }}
     </span>
@@ -86,12 +86,14 @@
       <v-icon>delete</v-icon>
       {{ $t('details:removeTransaction') }}
     </v-btn>
-    <v-btn color="primary" class="ml-2 left" @click="completeTransaction()"
-           :disabled="transactionItems.length === 0"
-           v-if="!areTransactionsCommited"
-    >
-      {{ $t('details:completeTransaction') }}
-    </v-btn>
+    <v-card-actions class="pb-6">
+      <v-btn color="primary" class="ml-2 left" @click="completeTransaction()"
+             :disabled="transactionItems.length === 0"
+             v-if="!areTransactionsCommited"
+      >
+        {{ $t('details:completeTransaction') }}
+      </v-btn>
+    </v-card-actions>
     <v-dialog
         v-model="showTransactionMsgSuccess"
         persistent
@@ -125,7 +127,7 @@
         </v-card-text>
       </v-card>
     </v-dialog>
-  </div>
+  </v-card>
 </template>
 
 <script>

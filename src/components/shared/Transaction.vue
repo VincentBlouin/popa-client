@@ -1,21 +1,15 @@
 <template>
   <div>
-    <v-btn color="primary" @click="back" class="mt-3 mb-3 ml-3">
-      {{ $t('cancel') }}
-    </v-btn>
-    <v-subheader class="text-h6 font-weight-bold">
-      {{ $t('transaction:itemsOfPurchase') }}
-    </v-subheader>
-    <transaction-details
-        :products="products"
-        :ardoiseUser="user"
-        @onTotal="setTransactionItemsTotal"
-        @completeTransaction="showConfirmSnackbar=false"
-    />
-    <v-divider class="mt-12 mb-12"></v-divider>
-    <!--    <v-subheader class="text-h5 mt-4 mb-4 pl-0">-->
-    <!--      {{ $t('transaction:products') }}-->
-    <!--    </v-subheader>-->
+    <v-toolbar class="mb-12" elevation="0">
+      <v-btn color="primary" @click="back" class="mt-3 mb-3 ml-3">
+        {{ $t('cancel') }}
+      </v-btn>
+      <v-spacer></v-spacer>
+      <v-btn :dark="transactionItemsTotal > 0" color="primary" :disabled="transactionItemsTotal <= 0"
+             @click="showCompleteTransactionModal = true; showConfirmSnackbar= false;">
+        {{ $t('transaction:completeTransaction') }}
+      </v-btn>
+    </v-toolbar>
     <v-layout row wrap style="" class="ml-1">
       <v-flex xs12 sm6 md4 lg4 xl2 v-for="product in products" :key="product.id">
         <v-card class="mr-6 mb-6">
@@ -85,7 +79,7 @@
         </v-btn>
       </template>
     </v-snackbar>
-    <v-dialog v-model="showCompleteTransactionModal">
+    <v-dialog v-model="showCompleteTransactionModal" eager>
       <v-card>
         <v-card-text class="pt-8">
           <transaction-details :products="products" @onTotal="setTransactionItemsTotal"
